@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfilePets"
+                android:id="@+id/CategoriasEnfemedades"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="Enfermedades"
@@ -46,7 +46,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfilePets"
+                android:id="@+id/CategoriasConsejos"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="Consejos"
@@ -67,7 +67,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfilePets"
+                android:id="@+id/CategoriasComportamiento"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="Comportamiento"
@@ -88,7 +88,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfilePets"
+                android:id="@+id/CategoriasAlimentacion"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="Alimentación"
@@ -109,7 +109,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ProfilePets"
+                android:id="@+id/CategoriasMiscelaneos"
                 android:layout_width="453dp"
                 android:layout_height="38dp"
                 android:text="Misceláneos"
