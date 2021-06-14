@@ -18,9 +18,4 @@ public class LoginActivity extends AppCompatActivity {
         setUp();
     }
 
-    private fun setUp() {
-        title = "Authentication";
-
-
-    }
 }

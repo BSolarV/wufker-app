@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523174448738",
+    "project_id": "wufkerapp",
+    "storage_bucket": "wufkerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523174448738:android:62fb9320a2257ca32c4b3b",
+        "android_client_info": {
+          "package_name": "com.messirvedevs.wufker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523174448738-1n9tq9gp9pentjbkt32149puug076quh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9JuimAVsZqJcochNKOQWD4_5npaKNSUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523174448738-1n9tq9gp9pentjbkt32149puug076quh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
