@@ -18,27 +18,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="49dp" />
-
-    <TextView
-        android:id="@+id/provider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Provider"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="109dp" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="123dp"
-        android:layout_height="47dp"
-        android:text="Button"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="372dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
