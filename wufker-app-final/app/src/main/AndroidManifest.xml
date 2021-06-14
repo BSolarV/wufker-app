@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".ForoActivity"
-            android:theme="@style/Theme.WufkerApp.NoActionBar">></activity>
+            android:theme="@style/Theme.WufkerApp.NoActionBar"></activity>
     </application>
 
 </manifest>
