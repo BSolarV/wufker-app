@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WufkerApp">
         <activity
-            android:name=".ForoActivity"
+            android:name=".InitActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.WufkerApp.NoActionBar">
             <intent-filter>
@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ForoActivity"
+            android:theme="@style/Theme.WufkerApp.NoActionBar">></activity>
     </application>
 
 </manifest>
