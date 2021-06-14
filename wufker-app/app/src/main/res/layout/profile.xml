@@ -69,7 +69,7 @@
                     android:id="@+id/ProfilePets"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:text="TextView"
+                    android:text="@string/ProfilePets"
                     android:textColor="@color/text_white" />
 
                 <GridView
@@ -100,7 +100,7 @@
                     android:id="@+id/ProfilePublications"
                     android:layout_width="match_parent"
                     android:layout_height="31dp"
-                    android:text="TextView"
+                    android:text="@string/ProfilePosts"
                     android:textColor="@color/text_white" />
 
                 <ListView
