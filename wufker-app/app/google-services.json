@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "7691584179",
-    "project_id": "wufker",
-    "storage_bucket": "wufker.appspot.com"
+    "project_number": "323204384478",
+    "project_id": "wufker-5d150",
+    "storage_bucket": "wufker-5d150.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:7691584179:android:42456196a13ec37bbd26c6",
+        "mobilesdk_app_id": "1:323204384478:android:7f22da2e62d91ddc6d644f",
         "android_client_info": {
           "package_name": "com.example.wufkerapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "7691584179-vr0mf4eq0fcu3lo0a5jfuhufe4agrsk1.apps.googleusercontent.com",
+          "client_id": "323204384478-dtt0dd9njb2ehfj55tft69tvjgse7ph3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAF6jEnjxYeec9rffoAh6SkdG5QqvJAKc4"
+          "current_key": "AIzaSyDIJzfiaVKu-jqBROzBY0bKkEVVS_PbxIU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "7691584179-vr0mf4eq0fcu3lo0a5jfuhufe4agrsk1.apps.googleusercontent.com",
+              "client_id": "323204384478-dtt0dd9njb2ehfj55tft69tvjgse7ph3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
