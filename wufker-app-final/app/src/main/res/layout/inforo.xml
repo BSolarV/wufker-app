@@ -6,16 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
+<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Foros" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+=======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="5dp">>
+>>>>>>> d788a051b1a83733f4c66bfd44059bb5d50f8dc7
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Nombre de usuario"
+                android:textSize="18sp" >
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titulo del foro"
+                android:textSize="13sp">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Responder" />
+
+        <ListView
+            android:id="@+id/listviewforo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+=======
             android:text="Foros" />
 
         <LinearLayout
@@ -42,6 +87,7 @@
 
 
         </LinearLayout>
+>>>>>>> d788a051b1a83733f4c66bfd44059bb5d50f8dc7
 
     </LinearLayout>
 
