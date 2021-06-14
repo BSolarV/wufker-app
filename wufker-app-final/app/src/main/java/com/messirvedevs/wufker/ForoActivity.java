@@ -1,8 +1,11 @@
 package com.messirvedevs.wufker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -19,7 +22,7 @@ import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 
 import java.util.List;
 
-public class ForoActivity extends AppCompatActivity {
+public class ForoActivity extends AppCompatActivity implements View.OnClickListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityForoBinding binding;
@@ -30,6 +33,7 @@ public class ForoActivity extends AppCompatActivity {
 
         binding = ActivityForoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,19 @@ public class ForoActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        //Foro Selector
+        TextView enf =  findViewById(R.id.CategoriasEnfemedades);
+        TextView cons =  findViewById(R.id.CategoriasConsejos);
+        TextView comp =  findViewById(R.id.CategoriasComportamiento);
+        TextView  ali =  findViewById(R.id.CategoriasAlimentacion);
+        TextView misc =  findViewById(R.id.CategoriasMiscelaneos);
+
+        enf.setOnClickListener(this);
+        cons.setOnClickListener(this);
+        comp.setOnClickListener(this);
+        ali.setOnClickListener(this);
+        misc.setOnClickListener(this);
+
     }
 
     @Override
@@ -67,4 +84,17 @@ public class ForoActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onClick(View v) {
+
+        int i = v.getId();
+        TextView ans = findViewById(i);
+        String selected = ans.getText().toString();
+        Toast.makeText(this, "Selected: " + selected, Toast.LENGTH_LONG).show();
+
+        /*Intent foro = new Intent(this, ForoDetailActivity.class);
+        foro.putExtra("category", selected);
+        startActivity(foro)*/;
+
+    }
 }
