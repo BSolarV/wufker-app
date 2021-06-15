@@ -37,6 +37,10 @@
             android:name=".CrearPostActivity"
             android:theme="@style/Theme.WufkerApp.NoActionBar">
         </activity>
+        <activity
+            android:name=".PostDetailActivity"
+            android:theme="@style/Theme.WufkerApp.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

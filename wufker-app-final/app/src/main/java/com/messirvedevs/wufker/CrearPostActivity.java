@@ -1,5 +1,6 @@
 package com.messirvedevs.wufker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,12 +15,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.messirvedevs.wufker.databinding.ActivityCrearPostBinding;
+
+import java.util.HashMap;
 
 public class CrearPostActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityCrearPostBinding binding;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String category, postTitle, postContent;
 
     @Override
@@ -56,11 +60,17 @@ public class CrearPostActivity extends AppCompatActivity {
         if (postTitle.length() > 0 && postContent.length() > 0) {
             // Agregar los nuevos post a firebase
 
-            Toast.makeText(this, "Categoria: " + category + "\nTitulo: " + postTitle +
-                    "\nContenido: " + postContent, Toast.LENGTH_LONG).show();
+            db.collection("posts").add(new HashMap<String, String>() {{
+                put("category", category);
+                put("title", postTitle);
+                put("content", postContent);
+                put("authorEmail", "overcloveer@gmail.com");
+            }});
+            finish();
         } else {
             Toast.makeText(this, "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
         }
+
     }
 
     public void cancelar(View view) {
@@ -80,4 +90,5 @@ public class CrearPostActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
