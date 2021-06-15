@@ -22,9 +22,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.type.DateTime;
 import com.messirvedevs.wufker.databinding.ActivityPostDetailBinding;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -86,7 +91,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("postId");
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         adapter = new ArrayAdapter(this, R.layout.list_item, ans_list );
         ListView InForoAnswers = findViewById(R.id.InForoAnswers);
@@ -125,11 +129,20 @@ public class PostDetailActivity extends AppCompatActivity {
             inForoTitle.setText(command.get("title").toString());
             InForoQuestion.setText(command.get("content").toString());
             InForoUser.setText(command.get("authorEmail").toString());
-            Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", command.getId()).get();
+            Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", id).get();
             answersQuery.addOnSuccessListener(content -> {
+                List<DocumentSnapshot> docList = content.getDocuments();
+                Collections.sort(docList, new Comparator<DocumentSnapshot>() {
+                    @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
+                        return Timestamp.valueOf( u1.get("datetime").toString() ).compareTo(Timestamp.valueOf( u2.get("datetime").toString() ));
+                    } });
                 if (answersQuery.isComplete()) {
-                    for (Answer ans : content.toObjects(Answer.class)) {
-                        ans_list.add(ans.getContent() + "\n" + ans.getDatetime() + " - "  + ans.getUsername());
+                    int i = 0;
+                    while (i < docList.size()) {
+                        DocumentSnapshot doc = docList.get(i);
+                        Answer ans = new Answer( doc.get("username").toString(),  doc.get("content").toString(), Timestamp.valueOf( doc.get("datetime").toString() ),  Integer.valueOf(doc.get("votes").toString()));
+                        ans_list.add(ans.getContent() + "\n" + new SimpleDateFormat("MM/dd/yyyy HH:mm").format(ans.getDatetime()) + " - "  + ans.getUsername());
+                        i++;
                     }
                     adapter.notifyDataSetChanged();
                 }
