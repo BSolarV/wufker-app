@@ -1,4 +1,4 @@
-package com.messirvedevs.wufker.ui;
+package com.messirvedevs.wufker;
 
 import java.sql.Timestamp;
 

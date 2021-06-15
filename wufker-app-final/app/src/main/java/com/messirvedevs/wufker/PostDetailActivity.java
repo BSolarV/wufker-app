@@ -1,11 +1,8 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +22,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.databinding.ActivityPostDetailBinding;
-import com.messirvedevs.wufker.ui.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,14 +64,15 @@ public class PostDetailActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        Toast.makeText(this, "navController", Toast.LENGTH_SHORT).show();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+
 
         adapter = new ArrayAdapter(this, R.layout.list_item, ans_list );
         ListView lv = findViewById(R.id.Foro_listPosts);
+
         lv.setAdapter(adapter);
+        Toast.makeText(this, "setted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
