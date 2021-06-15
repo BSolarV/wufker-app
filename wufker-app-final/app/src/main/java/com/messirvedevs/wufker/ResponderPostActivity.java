@@ -15,13 +15,19 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.messirvedevs.wufker.databinding.ActivityResponderPostBinding;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
 
 public class ResponderPostActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ActivityResponderPostBinding binding;
 
-    private String category, postTitle, postContent;
+    private String category, postTitle, postContent ,idPost;
     private String answer;
 
     @Override
@@ -45,9 +51,10 @@ public class ResponderPostActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         Bundle bundle = getIntent().getExtras();
-        category = bundle.getString("category");
+        //category = bundle.getString("category");
         postTitle = bundle.getString("postTitle");
         postContent = bundle.getString("postContent");
+        idPost = bundle.getString("id_post");
 
         TextView cat_txtview = findViewById(R.id.category);
         TextView title_txtview = findViewById(R.id.postTitle);
@@ -63,6 +70,18 @@ public class ResponderPostActivity extends AppCompatActivity {
 
         if (answer.length() > 0) {
             // Agregar la respuesta a firebase
+            Date date= new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+
+            db.collection("answers").add(new HashMap<String, String>() {{
+                put("postId", idPost);
+                put("content", answer);
+                put("datetime", String.valueOf(ts));
+                put("votes", "0");
+                put("username", "overcloveer@gmail.com");
+            }});
+            finish();
 
             Toast.makeText(this, "Categoria: " + category + "\nTitulo: " + postTitle +
                     "\nContenido: " + postContent + "\nRespuesta: " + answer, Toast.LENGTH_LONG).show();

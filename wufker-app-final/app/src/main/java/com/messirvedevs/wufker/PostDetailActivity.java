@@ -1,5 +1,6 @@
 package com.messirvedevs.wufker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +33,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private ActivityPostDetailBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Answer> answers;
+    private TextView inForoTitle,InForoUser,InForoQuestion;
 
     private List<String> ans_list = new ArrayList();
 
@@ -47,12 +49,25 @@ public class PostDetailActivity extends AppCompatActivity {
         binding = ActivityPostDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // set user an question
+        inForoTitle = findViewById(R.id.inForoTitle);
+        InForoQuestion = findViewById(R.id.InForoQuestion);
+        InForoUser = findViewById(R.id.InForoUser);
+
         setSupportActionBar(binding.appBarMainPostDetail.toolbar);
         binding.appBarMainPostDetail.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent ii = new Intent(view.getContext(), ResponderPostActivity.class);
+                //ii.putExtra("category",  );
+                ii.putExtra("id_post", id);
+                ii.putExtra("postTitle", inForoTitle.getText().toString());
+                ii.putExtra("postContent", InForoQuestion.getText().toString());
+
+
+                startActivity(ii);
             }
         });
 
@@ -101,10 +116,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         ans_list.clear();
 
-        // set user an question
-        TextView inForoTitle = findViewById(R.id.inForoTitle);
-        TextView InForoQuestion = findViewById(R.id.InForoQuestion);
-        TextView InForoUser = findViewById(R.id.InForoUser);
+
 
         // Get post and answers from database
 
@@ -113,11 +125,11 @@ public class PostDetailActivity extends AppCompatActivity {
             inForoTitle.setText(command.get("title").toString());
             InForoQuestion.setText(command.get("content").toString());
             InForoUser.setText(command.get("authorEmail").toString());
-            Task<QuerySnapshot> answersQuery = db.collection("anwers").whereEqualTo("post_id", command.getId()).get();
+            Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", command.getId()).get();
             answersQuery.addOnSuccessListener(content -> {
                 if (answersQuery.isComplete()) {
                     for (Answer ans : content.toObjects(Answer.class)) {
-                        ans_list.add(ans.getContent() + " \n - " + ans.getUsername());
+                        ans_list.add(ans.getContent() + "\n" + ans.getDatetime() + " - "  + ans.getUsername());
                     }
                     adapter.notifyDataSetChanged();
                 }
