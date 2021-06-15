@@ -13,8 +13,6 @@ import com.messirvedevs.wufker.ForoDetailActivity;
 import com.messirvedevs.wufker.R;
 
 public class CrearPostActivity extends AppCompatActivity {
-    private String postTitle, postContent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +23,16 @@ public class CrearPostActivity extends AppCompatActivity {
         TextInputEditText editTitle = findViewById(R.id.post_title);
         TextInputEditText editContent = findViewById(R.id.post_content);
 
-        postTitle = editTitle.getText().toString();
-        postContent = editContent.getText().toString();
+        String postTitle = editTitle.getText().toString();
+        String postContent = editContent.getText().toString();
 
-        Toast.makeText(this, postTitle + "\n" + postContent, Toast.LENGTH_LONG).show();
+        if (postTitle.length() > 0 && postContent.length() > 0) {
+            // Agregar los nuevos post a firebase
+            Toast.makeText(this, "Titulo: " + postTitle +
+                    "\nContenido: " + postContent, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void cancelar(View view) {
