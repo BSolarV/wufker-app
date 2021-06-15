@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main_crear_post">
+    tools:showIn="@layout/app_bar_main_responder_post">
 
     <fragment
         android:id="@+id/nav_host_fragment_content_main"
@@ -29,41 +29,49 @@
         app:layout_constraintTop_toTopOf="@+id/nav_host_fragment_content_main">
 
         <TextView
-            android:id="@+id/label_titulo"
+            android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Título de la Publicación:"
-            android:textSize="20dp" />
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:text="Categoría" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/titulo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/post_title"
+            <TextView
+                android:id="@+id/postTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                android:text="Titulo de la pregunta" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/postContent"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:text="Contenido de la Pregunta" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/label_descripcion"
+            android:id="@+id/label_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descripción Publicación:"
+            android:text="Respuesta:"
             android:textSize="20dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contenido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/post_content"
+                android:id="@+id/answer"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:overScrollMode="always"
@@ -80,19 +88,19 @@
             android:layout_marginRight="10dp">
 
             <Button
-                android:id="@+id/publicar"
+                android:id="@+id/responder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
-                android:onClick="publicar"
-                android:text="Publicar" />
+                android:onClick="responder"
+                android:text="Responder" />
 
             <Button
                 android:id="@+id/cancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/publicar"
+                android:layout_toLeftOf="@id/responder"
                 android:onClick="cancelar"
                 android:text="Cancelar" />
         </RelativeLayout>
