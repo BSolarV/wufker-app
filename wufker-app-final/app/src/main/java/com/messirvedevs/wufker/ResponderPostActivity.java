@@ -64,6 +64,8 @@ public class ResponderPostActivity extends AppCompatActivity {
         if (answer.length() > 0) {
             // Agregar la respuesta a firebase
 
+            Toast.makeText(this, "Categoria: " + category + "\nTitulo: " + postTitle +
+                    "\nContenido: " + postContent + "\nRespuesta: " + answer, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
         }
