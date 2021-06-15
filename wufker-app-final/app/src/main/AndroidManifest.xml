@@ -35,6 +35,7 @@
         </activity>
         <activity
             android:name=".ResponderPostActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.WufkerApp.NoActionBar">
         </activity>
         <activity
