@@ -37,6 +37,7 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
     private List<String> post_list = new ArrayList();
     private List<String> id_list = new ArrayList();
+    private String category;
 
     private ArrayAdapter adapter;
 
@@ -47,13 +48,25 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
         binding = ActivityForoDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ////
+        Bundle bundle = getIntent().getExtras();
+        category = bundle.getString("category");
 
+        TextView title = findViewById(R.id.Foro_listCategory);
+        title.setText(category);
+        ////
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own button", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+
+
+                Intent ii = new Intent(view.getContext(), CrearPostActivity.class);
+                ii.putExtra("category", category );
+                startActivity(ii);
+
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -71,11 +84,7 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
 
 
-        Bundle bundle = getIntent().getExtras();
-        String category = bundle.getString("category");
 
-        TextView title = findViewById(R.id.Foro_listCategory);
-        title.setText(category);
 
 
         Task<QuerySnapshot> data = db.collection("posts").whereEqualTo("category", category).get();
@@ -120,11 +129,11 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-        //Toast.makeText(this, post_list.get(pos), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, post_list.get(pos), Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(this, PostDetailActivity.class);
+        /*Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtra("postId",  id_list.get(pos));
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
 }
