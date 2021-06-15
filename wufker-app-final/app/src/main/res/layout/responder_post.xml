@@ -32,9 +32,16 @@
             android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:textSize="16sp"
             android:text="Categoría" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:background="?android:attr/listDivider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,6 +61,7 @@
                 android:id="@+id/postContent"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:background="@drawable/back"
                 android:text="Contenido de la Pregunta" />
         </LinearLayout>
 
