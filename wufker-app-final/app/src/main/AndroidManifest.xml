@@ -33,6 +33,10 @@
                 <action android:name="android.intent.action.ANSWER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CrearPostActivity"
+            android:theme="@style/Theme.WufkerApp.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

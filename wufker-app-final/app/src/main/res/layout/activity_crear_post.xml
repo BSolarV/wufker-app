@@ -27,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/label_titulo">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp" />
@@ -53,6 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/label_descripcion">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/post_content"
             android:layout_width="match_parent"
             android:layout_height="250dp" />
 
@@ -73,14 +75,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
-            android:text="Publicar" />
+            android:text="Publicar"
+            android:onClick="publicar" />
 
         <Button
             android:id="@+id/cancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/publicar"
-            android:text="Cancelar" />
+            android:text="Cancelar"
+            android:onClick="cancelar" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
