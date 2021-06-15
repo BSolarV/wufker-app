@@ -1,6 +1,7 @@
 package com.messirvedevs.wufker;
 
 public class ForoPost {
+    private String id;
     private String category;
     private String title;
     private String authorEmail;
@@ -10,11 +11,19 @@ public class ForoPost {
     public ForoPost() {
     }
 
-    public ForoPost(String category, String title, String authorEmail, String content) {
+    public ForoPost(String category, String title, String authorEmail, String content, String id) {
         this.category = category;
         this.title = title;
         this.authorEmail = authorEmail;
         this.content = content;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public String setId() {
+        return id;
     }
 
     public String getTitle() {
