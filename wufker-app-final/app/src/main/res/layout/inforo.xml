@@ -1,66 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
-    </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="3dp">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="181dp"
+            android:orientation="horizontal">
 
-            android:background="@color/cardview_dark_background"
-            android:orientation="vertical">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="Nombre de usuario"
-                android:textSize="18sp" >
+                android:layout_height="183dp"
+                android:orientation="vertical">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/InForoUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:text="Usuario"
+                    android:textColor="@color/text_white" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Titulo del foro"
-                android:textSize="13sp">
-
-            </TextView>
+                <TextView
+                    android:id="@+id/InForoQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="134dp"
+                    android:text="Pregunta"
+                    android:textColor="@color/text_white" />
+            </LinearLayout>
 
         </LinearLayout>
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Responder" />
+            android:layout_height="549dp"
+            android:orientation="horizontal">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="291dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="419dp">
 
+                </ListView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/fab_margin"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 
