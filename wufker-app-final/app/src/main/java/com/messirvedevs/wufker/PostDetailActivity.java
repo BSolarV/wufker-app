@@ -37,6 +37,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private ArrayAdapter adapter;
 
+    private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -67,12 +69,14 @@ public class PostDetailActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        Bundle bundle = getIntent().getExtras();
+        id = bundle.getString("postId");
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         adapter = new ArrayAdapter(this, R.layout.list_item, ans_list );
-        ListView lv = findViewById(R.id.Foro_listPosts);
+        ListView InForoAnswers = findViewById(R.id.InForoAnswers);
 
-        lv.setAdapter(adapter);
-        Toast.makeText(this, "setted", Toast.LENGTH_SHORT).show();
+        InForoAnswers.setAdapter(adapter);
     }
 
     @Override
@@ -98,16 +102,15 @@ public class PostDetailActivity extends AppCompatActivity {
         ans_list.clear();
 
         // set user an question
-        TextView inTitle = findViewById(R.id.inForoTitle);
+        TextView inForoTitle = findViewById(R.id.inForoTitle);
         TextView InForoQuestion = findViewById(R.id.InForoQuestion);
         TextView InForoUser = findViewById(R.id.InForoUser);
 
         // Get post and answers from database
-        Bundle bundle = getIntent().getExtras();
-        String id = bundle.getString("postId");
+
         Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
         data.addOnSuccessListener(command -> {
-            inTitle.setText(command.get("title").toString());
+            inForoTitle.setText(command.get("title").toString());
             InForoQuestion.setText(command.get("content").toString());
             InForoUser.setText(command.get("authorEmail").toString());
             Task<QuerySnapshot> answersQuery = db.collection("anwers").whereEqualTo("post_id", command.getId()).get();

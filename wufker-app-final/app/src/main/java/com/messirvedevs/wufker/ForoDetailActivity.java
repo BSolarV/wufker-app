@@ -124,11 +124,13 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
         data.addOnSuccessListener(command -> {
             String text = "Selected: "+category+"\n"+command.size()+"\n";
             if ( data.isComplete() ){
+                int i = 0;
                 for (ForoPost post:
                         command.toObjects(ForoPost.class)) {
                     text = text + post.getTitle() + "\n";
                     post_list.add(post.getTitle());
-                    id_list.add(post.getId());
+                    id_list.add(command.getDocuments().get(i).getId());
+                    i++;
                 }
                 //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
