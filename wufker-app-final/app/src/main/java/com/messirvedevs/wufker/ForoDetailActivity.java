@@ -1,8 +1,13 @@
 package com.messirvedevs.wufker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,15 +25,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.databinding.ActivityForoDetailBinding;
 
-public class ForoDetailActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ForoDetailActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityForoDetailBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private List<String> post_list = new ArrayList();
+    private ArrayAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
 
@@ -56,8 +67,15 @@ public class ForoDetailActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+
+
         Bundle bundle = getIntent().getExtras();
         String category = bundle.getString("category");
+
+        TextView title = findViewById(R.id.Foro_listCategory);
+        title.setText(category);
+
+
         Task<QuerySnapshot> data = db.collection("posts").whereEqualTo("category", category).get();
         data.addOnSuccessListener(command -> {
             String text = "Selected: "+category+"\n"+command.size()+"\n";
@@ -65,10 +83,20 @@ public class ForoDetailActivity extends AppCompatActivity {
                 for (ForoPost post:
                         command.toObjects(ForoPost.class)) {
                     text = text + post.getTitle() + "\n";
+                    post_list.add(post.getTitle());
                 }
                 Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+                Collections.sort(post_list);
+                adapter.notifyDataSetChanged();
             }
         });
+
+
+        adapter = new ArrayAdapter(this, R.layout.list_item, post_list );
+        ListView lv = findViewById(R.id.Foro_listPosts);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
+
 
 
 
@@ -86,6 +114,14 @@ public class ForoDetailActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+        Toast.makeText(this, post_list.get(pos), Toast.LENGTH_LONG).show();
+
+        /*Intent intent = new Intent(this, ForoPost.class);
+        startActivity(intent);*/
     }
 
 }
