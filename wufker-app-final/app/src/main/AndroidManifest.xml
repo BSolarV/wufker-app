@@ -21,7 +21,18 @@
         </activity>
         <activity
             android:name=".ForoActivity"
-            android:theme="@style/Theme.WufkerApp.NoActionBar"></activity>
+            android:theme="@style/Theme.WufkerApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.CHOOSER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ForoDetailActivity"
+            android:theme="@style/Theme.WufkerApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.ANSWER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

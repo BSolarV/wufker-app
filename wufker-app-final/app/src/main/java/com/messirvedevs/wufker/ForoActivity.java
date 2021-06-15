@@ -90,11 +90,10 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
         int i = v.getId();
         TextView ans = findViewById(i);
         String selected = ans.getText().toString();
-        Toast.makeText(this, "Selected: " + selected, Toast.LENGTH_LONG).show();
 
-        /*Intent foro = new Intent(this, ForoDetailActivity.class);
+        Intent foro = new Intent(this, ForoDetailActivity.class);
         foro.putExtra("category", selected);
-        startActivity(foro)*/;
+        startActivity(foro);
 
     }
 }

@@ -18,4 +18,118 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foros"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CategoriasEnfemedades"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Enfermedades"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CategoriasConsejos"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Consejos"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CategoriasComportamiento"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Comportamiento"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CategoriasAlimentacion"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Alimentación"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CategoriasMiscelaneos"
+                android:layout_width="453dp"
+                android:layout_height="38dp"
+                android:text="Misceláneos"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
