@@ -50,12 +50,13 @@ public class CrearPostActivity extends AppCompatActivity {
         TextInputEditText editTitle = findViewById(R.id.post_title);
         TextInputEditText editContent = findViewById(R.id.post_content);
 
-        postTitle = editTitle.getText().toString();
-        postContent = editContent.getText().toString();
+        postTitle = editTitle.getText().toString().trim();
+        postContent = editContent.getText().toString().trim();
 
         if (postTitle.length() > 0 && postContent.length() > 0) {
             // Agregar los nuevos post a firebase
-            Toast.makeText(this, "Titulo: " + postTitle +
+
+            Toast.makeText(this, "Categoria: " + category + "\nTitulo: " + postTitle +
                     "\nContenido: " + postContent, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();

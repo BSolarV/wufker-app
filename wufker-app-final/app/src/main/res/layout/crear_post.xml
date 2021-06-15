@@ -64,8 +64,12 @@
                 android:id="@+id/post_content"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:gravity="top"
                 android:inputType="textMultiLine"
-                android:overScrollMode="always" />
+                android:overScrollMode="always"
+                android:padding="15dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
