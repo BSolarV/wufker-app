@@ -1,10 +1,8 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +13,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.messirvedevs.wufker.ForoDetailActivity;
-import com.messirvedevs.wufker.R;
 import com.messirvedevs.wufker.databinding.ActivityCrearPostBinding;
-import com.messirvedevs.wufker.databinding.ActivityForoDetailBinding;
 
 public class CrearPostActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityCrearPostBinding binding;
+
+    private String category, postTitle, postContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +41,17 @@ public class CrearPostActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        Bundle bundle = getIntent().getExtras();
+        category = bundle.getString("category");
     }
 
     public void publicar(View view) {
         TextInputEditText editTitle = findViewById(R.id.post_title);
         TextInputEditText editContent = findViewById(R.id.post_content);
 
-        String postTitle = editTitle.getText().toString();
-        String postContent = editContent.getText().toString();
+        postTitle = editTitle.getText().toString();
+        postContent = editContent.getText().toString();
 
         if (postTitle.length() > 0 && postContent.length() > 0) {
             // Agregar los nuevos post a firebase
