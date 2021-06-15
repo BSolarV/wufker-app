@@ -34,6 +34,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ResponderPostActivity"
+            android:theme="@style/Theme.WufkerApp.NoActionBar">
+        </activity>
+        <activity
             android:name=".CrearPostActivity"
             android:theme="@style/Theme.WufkerApp.NoActionBar">
         </activity>
