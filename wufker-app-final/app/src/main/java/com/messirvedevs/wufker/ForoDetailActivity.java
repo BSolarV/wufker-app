@@ -36,6 +36,8 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private List<String> post_list = new ArrayList();
+    private List<String> id_list = new ArrayList();
+
     private ArrayAdapter adapter;
 
     @Override
@@ -84,9 +86,9 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
                         command.toObjects(ForoPost.class)) {
                     text = text + post.getTitle() + "\n";
                     post_list.add(post.getTitle());
+                    id_list.add(post.getId());
                 }
-                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-                Collections.sort(post_list);
+                //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -118,10 +120,11 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-        Toast.makeText(this, post_list.get(pos), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, post_list.get(pos), Toast.LENGTH_LONG).show();
 
-        /*Intent intent = new Intent(this, ForoPost.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(this, PostDetailActivity.class);
+        intent.putExtra("postId",  id_list.get(pos));
+        startActivity(intent);
     }
 
 }
