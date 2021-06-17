@@ -20,116 +20,127 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="5dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Foros"
-            android:textSize="24sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/CategoriasEnfemedades"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="Enfermedades"
-                android:textColor="@color/text_white"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="Foros"
+                android:textSize="24sp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/CategoriasConsejos"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="Consejos"
-                android:textColor="@color/text_white"
-                android:textSize="18sp" />
+                android:layout_height="10dp" />
 
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/CategoriasComportamiento"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="Comportamiento"
-                android:textColor="@color/text_white"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/CategoriasEnfemedades"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="Enfermedades"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/CategoriasAlimentacion"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:text="Alimentación"
-                android:textColor="@color/text_white"
-                android:textSize="18sp" />
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/CategoriasConsejos"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="Consejos"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/CategoriasComportamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="Comportamiento"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/CategoriasAlimentacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="Alimentación"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/CategoriasMiscelaneos"
+                    android:layout_width="453dp"
+                    android:layout_height="38dp"
+                    android:text="Misceláneos"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ver Mapa" />
 
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/CategoriasMiscelaneos"
-                android:layout_width="453dp"
-                android:layout_height="38dp"
-                android:text="Misceláneos"
-                android:textColor="@color/text_white"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

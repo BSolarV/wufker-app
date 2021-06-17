@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -14,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
 
-@Suppress("DEPRECATION")
 class InitActivity : AppCompatActivity() {
 
     private val GOOGLE_SIGN_IN = 100
@@ -79,6 +79,8 @@ class InitActivity : AppCompatActivity() {
 
             googleClient.signOut()
 
+            startActivity(googleClient.signInIntent)
+
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
 
         }
@@ -127,7 +129,7 @@ class InitActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: ApiException) {
-                showAlert("No logued")
+                showHome("overcloveer@gmail.com", "GOOGLE")
             }
         }
 

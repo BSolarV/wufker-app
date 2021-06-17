@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WufkerApp">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".MapActivity">
+
+        </activity>
         <activity
             android:name=".InitActivity"
             android:label="@string/app_name"
@@ -35,17 +43,14 @@
         </activity>
         <activity
             android:name=".ResponderPostActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.WufkerApp.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.WufkerApp.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".CrearPostActivity"
-            android:theme="@style/Theme.WufkerApp.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.WufkerApp.NoActionBar" />
         <activity
             android:name=".PostDetailActivity"
-            android:theme="@style/Theme.WufkerApp.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.WufkerApp.NoActionBar" />
     </application>
 
 </manifest>

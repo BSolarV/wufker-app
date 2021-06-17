@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,12 +62,20 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
         TextView comp =  findViewById(R.id.CategoriasComportamiento);
         TextView  ali =  findViewById(R.id.CategoriasAlimentacion);
         TextView misc =  findViewById(R.id.CategoriasMiscelaneos);
+        Button mapButton =  findViewById(R.id.mapButton);
 
         enf.setOnClickListener(this);
         cons.setOnClickListener(this);
         comp.setOnClickListener(this);
         ali.setOnClickListener(this);
         misc.setOnClickListener(this);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapa = new Intent(view.getContext(), MapActivity.class);
+                startActivity(mapa);
+            }
+        });
 
     }
 
@@ -94,6 +103,5 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
         Intent foro = new Intent(this, ForoDetailActivity.class);
         foro.putExtra("category", selected);
         startActivity(foro);
-
     }
 }
