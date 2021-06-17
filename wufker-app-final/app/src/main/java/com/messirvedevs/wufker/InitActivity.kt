@@ -6,11 +6,18 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
+
+@Suppress("DEPRECATION")
 class InitActivity : AppCompatActivity() {
 
+    private val GOOGLE_SIGN_IN = 100
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +29,11 @@ class InitActivity : AppCompatActivity() {
         bundle.putString("message", "integracion completa")
         mFirebaseAnalytics!!.logEvent("InitScreen", bundle)
 
-        setup();
+        setup()
     }
 
     private fun setup() {
-        title = "Autenticación";
+        title = "Autenticación"
         val singup: Button = findViewById(R.id.registerButton)
         val editTextTextEmailAddress: EditText = findViewById(R.id.editTextEmail)
         val editTextTextPassword: EditText = findViewById(R.id.editTextPassword)
@@ -61,10 +68,24 @@ class InitActivity : AppCompatActivity() {
                     }
             }
         }
+        val googleButton : Button = findViewById(R.id.GoogleSingIn)
+        googleButton.setOnClickListener {
+            val googleConf =
+                    GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build()
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
+
+            googleClient.signOut()
+
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
+
+        }
     }
 
     private fun showAlert(msg:String) {
-        val builder = AlertDialog.Builder(this);
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
         builder.setMessage(msg)
         builder.setPositiveButton("Aceptar", null)
@@ -77,6 +98,38 @@ class InitActivity : AppCompatActivity() {
             putExtra("email", email)
             putExtra( "provider", provider )
         }
-        startActivity(homeIntent);
+        startActivity(homeIntent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == GOOGLE_SIGN_IN) {
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            try {
+                val account = task.getResult(ApiException::class.java)
+
+                showAlert("account")
+
+                if (account != null) {
+
+                    showAlert("entre")
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                        showAlert("firebase")
+                        if (it.isSuccessful) {
+                            showHome(account.email ?: "", "GOOGLE")
+                        } else {
+                            showAlert(it.toString())
+                        }
+                    }
+                }
+            } catch (e: ApiException) {
+                showAlert("No logued")
+            }
+        }
+
     }
 }
