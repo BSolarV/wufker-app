@@ -3,23 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/foroSelector">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.messirvedevs.wufker.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/foroSelector"
+        android:name="com.messirvedevs.wufker.ForoSelector"
+        android:label="fragment_foro_selector"
+        tools:layout="@layout/fragment_foro_selector" >
+        <action
+            android:id="@+id/action_foroSelector_to_publicationSelector3"
+            app:destination="@id/publicationSelector" />
+        <action
+            android:id="@+id/action_foroSelector_to_googleMap"
+            app:destination="@id/googleMap" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.messirvedevs.wufker.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/publicationSelector"
+        android:name="com.messirvedevs.wufker.publicationSelector"
+        android:label="fragment_publication_selector"
+        tools:layout="@layout/fragment_publication_selector" >
+        <action
+            android:id="@+id/action_publicationSelector_to_publicationDetail"
+            app:destination="@id/publicationDetail" />
+        <argument
+            android:name="selector"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_publicationSelector_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.messirvedevs.wufker.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/publicationDetail"
+        android:name="com.messirvedevs.wufker.publicationDetail"
+        android:label="fragment_publication_detail"
+        tools:layout="@layout/fragment_publication_detail" >
+        <action
+            android:id="@+id/action_publicationDetail_to_answerPublicationFragment"
+            app:destination="@id/answerPublicationFragment" />
+        <argument
+            android:name="postId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/googleMap"
+        android:name="com.messirvedevs.wufker.googleMap"
+        android:label="fragment_google_map"
+        tools:layout="@layout/fragment_google_map" />
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.messirvedevs.wufker.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/answerPublicationFragment"
+        android:name="com.messirvedevs.wufker.AnswerPublicationFragment"
+        android:label="fragment_answer_publication"
+        tools:layout="@layout/fragment_answer_publication" />
 </navigation>

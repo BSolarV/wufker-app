@@ -23,7 +23,7 @@ import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 
 import java.util.List;
 
-public class ForoActivity extends AppCompatActivity implements View.OnClickListener{
+public class ForoActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityForoBinding binding;
@@ -37,19 +37,19 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
 
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+        /*binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.foroSelector, R.id.publicationSelector, R.id.publicationDetail,R.id.googleMap)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -57,7 +57,7 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //Foro Selector
-        TextView enf =  findViewById(R.id.CategoriasEnfemedades);
+        /*TextView enf =  findViewById(R.id.CategoriasEnfemedades);
         TextView cons =  findViewById(R.id.CategoriasConsejos);
         TextView comp =  findViewById(R.id.CategoriasComportamiento);
         TextView  ali =  findViewById(R.id.CategoriasAlimentacion);
@@ -73,9 +73,10 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 Intent mapa = new Intent(view.getContext(), MapActivity.class);
-                startActivity(mapa);
+                Navigation.findNavController(view).navigate(R.id.googleMap);
+                //startActivity(mapa);
             }
-        });
+        });*/
 
     }
 
@@ -93,15 +94,21 @@ public class ForoActivity extends AppCompatActivity implements View.OnClickListe
                 || super.onSupportNavigateUp();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
 
         int i = v.getId();
         TextView ans = findViewById(i);
         String selected = ans.getText().toString();
 
-        Intent foro = new Intent(this, ForoDetailActivity.class);
-        foro.putExtra("category", selected);
-        startActivity(foro);
-    }
+        *//*Intent foro = new Intent(this, ForoDetailActivity.class);
+        foro.putExtra("category", selected);*//*
+
+        Bundle bundle = new Bundle();
+        bundle.putString("selected" ,selected);
+
+
+        Navigation.findNavController(v).navigate(R.id.publicationSelector, bundle);
+        //startActivity(foro);
+    }*/
 }

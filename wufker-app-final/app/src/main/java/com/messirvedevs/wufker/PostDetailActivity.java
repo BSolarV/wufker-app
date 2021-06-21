@@ -60,11 +60,11 @@ public class PostDetailActivity extends AppCompatActivity {
         InForoUser = findViewById(R.id.InForoUser);
 
         setSupportActionBar(binding.appBarMainPostDetail.toolbar);
-        binding.appBarMainPostDetail.fab.setOnClickListener(new View.OnClickListener() {
+        /*binding.appBarMainPostDetail.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*//*
                 Intent ii = new Intent(view.getContext(), ResponderPostActivity.class);
                 //ii.putExtra("category",  );
                 ii.putExtra("id_post", id);
@@ -74,7 +74,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                 startActivity(ii);
             }
-        });
+        });*/
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -82,7 +82,7 @@ public class PostDetailActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.foroSelector, R.id.publicationSelector, R.id.publicationDetail)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

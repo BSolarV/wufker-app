@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 import com.messirvedevs.wufker.databinding.ActivityForoDetailBinding;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.List;
 public class ForoDetailActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityForoDetailBinding binding;
+    private ActivityForoBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private List<String> post_list = new ArrayList();
@@ -46,21 +47,21 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
 
         super.onCreate(savedInstanceState);
 
-        binding = ActivityForoDetailBinding.inflate(getLayoutInflater());
+        /*binding = ActivityForoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         ////
         Bundle bundle = getIntent().getExtras();
-        category = bundle.getString("category");
+        category = bundle.getString("category");*/
 
         TextView title = findViewById(R.id.Foro_listCategory);
         title.setText(category);
         ////
-        setSupportActionBar(binding.appBarMain.toolbar);
+        /*setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own button", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                *//*Snackbar.make(view, "Replace with your own button", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*//*
 
 
                 Intent ii = new Intent(view.getContext(), CrearPostActivity.class);
@@ -74,12 +75,12 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.foroSelector, R.id.publicationSelector, R.id.publicationDetail)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(navigationView, navController);*/
 
 
         adapter = new ArrayAdapter(this, R.layout.list_item, post_list );
