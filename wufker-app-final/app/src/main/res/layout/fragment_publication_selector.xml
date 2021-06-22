@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gray"
     tools:context=".ForoDetailActivity">
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:background="@drawable/background_gray"
         android:orientation="vertical">
 
         <LinearLayout
@@ -27,7 +29,9 @@
                     android:id="@+id/Foro_listCategory"
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
-                    android:text="TextView" />
+                    android:text="Title"
+                    android:textColor="@color/text_white"
+                    android:textSize="22sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -44,7 +48,9 @@
                 <ListView
                     android:id="@+id/Foro_listPosts"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp">
+                    android:layout_height="450dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="10.0sp">
 
                 </ListView>
 
@@ -54,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="@dimen/fab_margin"
-                    app:srcCompat="@android:drawable/ic_dialog_email" />
+                    app:srcCompat="@drawable/add" />
 
             </LinearLayout>
         </LinearLayout>

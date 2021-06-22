@@ -80,6 +80,7 @@ public class AnswerPublicationFragment extends Fragment {
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        category = getArguments().getString("category");
         postTitle = getArguments().getString("postTitle");
         postContent = getArguments().getString("postContent");
         idPost = getArguments().getString("id_post");

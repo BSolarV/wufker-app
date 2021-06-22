@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gray"
     tools:context=".publicationDetail">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/card_dark"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -26,14 +29,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="Titulo"
-                    android:textSize="16sp" />
+                    android:textColor="@color/text_white"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/InForoQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="134dp"
                     android:text="Pregunta"
-                    android:textColor="@color/text_white" />
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/InForoUser"
@@ -45,6 +50,10 @@
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +68,9 @@
                 <ListView
                     android:id="@+id/InForoAnswers"
                     android:layout_width="match_parent"
-                    android:layout_height="419dp">
+                    android:layout_height="375dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="10.0sp">
 
                 </ListView>
 
@@ -69,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="@dimen/fab_margin"
-                    app:srcCompat="@android:drawable/ic_dialog_email" />
+                    app:srcCompat="@drawable/add" />
 
             </LinearLayout>
 

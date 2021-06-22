@@ -129,6 +129,7 @@ public class publicationSelector extends Fragment implements AdapterView.OnItemC
 
         Bundle bundle = new Bundle();
         bundle.putString("postId",  id_list.get(pos));
+        bundle.putString("category", category);
 
         Navigation.findNavController(view).navigate(R.id.publicationDetail, bundle);
     }

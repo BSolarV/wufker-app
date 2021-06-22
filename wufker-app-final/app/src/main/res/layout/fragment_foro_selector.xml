@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gray"
     tools:context=".ForoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="5dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Foros" />
+            android:layout_height="44dp"
+            android:text="Foros"
+            android:textColor="@color/text_white"
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +29,8 @@
             <TextView
                 android:id="@+id/CategoriasEnfemedades"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_dark"
                 android:text="Enfermedades"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -36,7 +40,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -48,7 +52,8 @@
             <TextView
                 android:id="@+id/CategoriasConsejos"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_dark"
                 android:text="Consejos"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -57,7 +62,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -69,7 +74,8 @@
             <TextView
                 android:id="@+id/CategoriasComportamiento"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_dark"
                 android:text="Comportamiento"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -78,7 +84,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -90,7 +96,8 @@
             <TextView
                 android:id="@+id/CategoriasAlimentacion"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_dark"
                 android:text="Alimentación"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -99,7 +106,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -111,13 +118,19 @@
             <TextView
                 android:id="@+id/CategoriasMiscelaneos"
                 android:layout_width="453dp"
-                android:layout_height="38dp"
+                android:layout_height="50dp"
+                android:background="@drawable/card_dark"
                 android:text="Misceláneos"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
 
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:orientation="horizontal"></LinearLayout>
+
         <Button
             android:id="@+id/mapButton"
             android:layout_width="wrap_content"
@@ -125,7 +138,6 @@
             android:text="Ver Mapa" />
 
     </LinearLayout>
-
 
 
 </FrameLayout>

@@ -55,7 +55,7 @@ public class publicationDetail extends Fragment {
 
     private ArrayAdapter adapter;
 
-    private String id;
+    private String id,category;
 
     public publicationDetail() {
         // Required empty public constructor
@@ -110,9 +110,12 @@ public class publicationDetail extends Fragment {
                         .setAction("Action", null).show();*/
                 //Intent ii = new Intent(view.getContext(), ResponderPostActivity.class);
                 //ii.putExtra("category",  );
+
+                category = getArguments().getString("category");
                 Bundle bundle = new Bundle();
 
                 bundle.putString("id_post", id);
+                bundle.putString("category" , category);
                 bundle.putString("postTitle", inForoTitle.getText().toString());
                 bundle.putString("postContent", InForoQuestion.getText().toString());
 
@@ -126,7 +129,7 @@ public class publicationDetail extends Fragment {
 
         id = getArguments().getString("postId");
 
-        adapter = new ArrayAdapter(getContext(), R.layout.list_item, ans_list );
+        adapter = new ArrayAdapter(getContext(), R.layout.list_item2, ans_list );
         ListView InForoAnswers = (ListView) getView().findViewById(R.id.InForoAnswers);
 
         InForoAnswers.setAdapter(adapter);

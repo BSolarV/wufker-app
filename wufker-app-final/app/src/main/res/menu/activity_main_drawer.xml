@@ -6,19 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/foroSelector"
-            android:icon="@drawable/add"
-            android:title="Foro Selector" />
-        <item
-            android:id="@+id/publicationSelector"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Pub Selector" />
-        <item
-            android:id="@+id/publicationDetail"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title= "Pub Detail" />
+            android:icon="?attr/actionModeCopyDrawable"
+            android:title="Foros" />
         <item
             android:id="@+id/googleMap"
-            android:icon="@drawable/add"
+            android:icon="@drawable/common_google_signin_btn_icon_light_focused"
             android:title= "Mapa" />
 
     </group>

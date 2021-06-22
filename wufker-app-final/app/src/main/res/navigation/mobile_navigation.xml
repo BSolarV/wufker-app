@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/foroSelector"
         android:name="com.messirvedevs.wufker.ForoSelector"
-        android:label="fragment_foro_selector"
-        tools:layout="@layout/fragment_foro_selector" >
+        android:label="Wufker"
+        tools:layout="@layout/fragment_foro_selector">
         <action
             android:id="@+id/action_foroSelector_to_publicationSelector3"
             app:destination="@id/publicationSelector" />
@@ -20,8 +20,8 @@
     <fragment
         android:id="@+id/publicationSelector"
         android:name="com.messirvedevs.wufker.publicationSelector"
-        android:label="fragment_publication_selector"
-        tools:layout="@layout/fragment_publication_selector" >
+        android:label="Publicaciones"
+        tools:layout="@layout/fragment_publication_selector">
         <action
             android:id="@+id/action_publicationSelector_to_publicationDetail"
             app:destination="@id/publicationDetail" />
@@ -35,8 +35,8 @@
     <fragment
         android:id="@+id/publicationDetail"
         android:name="com.messirvedevs.wufker.publicationDetail"
-        android:label="fragment_publication_detail"
-        tools:layout="@layout/fragment_publication_detail" >
+        android:label="Post"
+        tools:layout="@layout/fragment_publication_detail">
         <action
             android:id="@+id/action_publicationDetail_to_answerPublicationFragment"
             app:destination="@id/answerPublicationFragment" />
@@ -47,16 +47,16 @@
     <fragment
         android:id="@+id/googleMap"
         android:name="com.messirvedevs.wufker.googleMap"
-        android:label="fragment_google_map"
+        android:label="Mapa"
         tools:layout="@layout/fragment_google_map" />
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.messirvedevs.wufker.AddPostFragment"
-        android:label="fragment_add_post"
+        android:label="Agregar"
         tools:layout="@layout/fragment_add_post" />
     <fragment
         android:id="@+id/answerPublicationFragment"
         android:name="com.messirvedevs.wufker.AnswerPublicationFragment"
-        android:label="fragment_answer_publication"
+        android:label="Responder"
         tools:layout="@layout/fragment_answer_publication" />
 </navigation>
