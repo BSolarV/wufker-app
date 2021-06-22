@@ -116,14 +116,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/GoogleSingIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="sign in with google" />
-            </LinearLayout>
+                android:orientation="vertical"/>
         </LinearLayout>
 
     </LinearLayout>

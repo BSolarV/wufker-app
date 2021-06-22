@@ -57,7 +57,7 @@ class InitActivity : AppCompatActivity() {
                     }
             }
         }
-        val googleButton : Button = findViewById(R.id.GoogleSingIn)
+        /*val googleButton : Button = findViewById(R.id.GoogleSingIn)
         googleButton.setOnClickListener {
             val googleConf =
                     GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
@@ -72,7 +72,7 @@ class InitActivity : AppCompatActivity() {
 
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
 
-        }
+        }*/
     }
 
     private fun showAlert(msg:String) {
