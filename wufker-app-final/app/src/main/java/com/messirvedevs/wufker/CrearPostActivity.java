@@ -1,6 +1,7 @@
 package com.messirvedevs.wufker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -21,6 +22,10 @@ import com.messirvedevs.wufker.databinding.ActivityCrearPostBinding;
 import java.util.HashMap;
 
 public class CrearPostActivity extends AppCompatActivity {
+
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityCrearPostBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -58,13 +63,16 @@ public class CrearPostActivity extends AppCompatActivity {
         postContent = editContent.getText().toString().trim();
 
         if (postTitle.length() > 0 && postContent.length() > 0) {
+
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
             // Agregar los nuevos post a firebase
 
             db.collection("posts").add(new HashMap<String, String>() {{
                 put("category", category);
                 put("title", postTitle);
                 put("content", postContent);
-                put("authorEmail", "overcloveer@gmail.com");
+                put("authorEmail", sharedPreferences.getString(EMAIL, ""));
             }});
             finish();
         } else {

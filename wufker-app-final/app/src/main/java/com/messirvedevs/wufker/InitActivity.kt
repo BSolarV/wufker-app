@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -35,21 +34,11 @@ class InitActivity : AppCompatActivity() {
     private fun setup() {
         title = "Autenticación"
         val singup: Button = findViewById(R.id.registerButton)
-        val editTextTextEmailAddress: EditText = findViewById(R.id.editTextEmail)
-        val editTextTextPassword: EditText = findViewById(R.id.editTextPassword)
+        val editTextTextEmailAddress: EditText = findViewById(R.id.editTextFirstName)
+        val editTextTextPassword: EditText = findViewById(R.id.editTextLastName)
 
         singup.setOnClickListener {
-            if( editTextTextEmailAddress.text.isNotEmpty() && editTextTextPassword.text.isNotEmpty()) {
-                FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(editTextTextEmailAddress.text.toString(),
-                        editTextTextPassword.text.toString()).addOnCompleteListener {
-                        if( it.isSuccessful ) {
-                            showHome( it.result?.user?.email ?:"", "BASIC" )
-                        }else {
-                            showAlert(it.exception.toString())
-                        }
-                    }
-            }
+            showSingUp();
         }
 
         val singin: Button = findViewById(R.id.singinButton)
@@ -101,6 +90,11 @@ class InitActivity : AppCompatActivity() {
             putExtra( "provider", provider )
         }
         startActivity(homeIntent)
+    }
+
+    private fun showSingUp() {
+        val singUpIntent:Intent = Intent( this, SingUpActivity::class.java )
+        startActivity(singUpIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

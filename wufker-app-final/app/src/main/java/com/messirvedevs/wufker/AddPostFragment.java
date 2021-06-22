@@ -1,5 +1,7 @@
 package com.messirvedevs.wufker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,6 +25,9 @@ import java.util.HashMap;
  * create an instance of this fragment.
  */
 public class AddPostFragment extends Fragment {
+
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,13 +108,16 @@ public class AddPostFragment extends Fragment {
         postContent = editContent.getText().toString().trim();
 
         if (postTitle.length() > 0 && postContent.length() > 0) {
+
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+
             // Agregar los nuevos post a firebase
 
             db.collection("posts").add(new HashMap<String, String>() {{
                 put("category", category);
                 put("title", postTitle);
                 put("content", postContent);
-                put("authorEmail", "overcloveer@gmail.com");
+                put("authorEmail", sharedPreferences.getString(EMAIL, ""));
             }});
             Navigation.findNavController(view).popBackStack();
         } else {

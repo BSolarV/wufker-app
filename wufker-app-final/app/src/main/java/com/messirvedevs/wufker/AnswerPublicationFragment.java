@@ -1,5 +1,7 @@
 package com.messirvedevs.wufker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -26,6 +28,9 @@ import java.util.HashMap;
  * create an instance of this fragment.
  */
 public class AnswerPublicationFragment extends Fragment {
+
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -119,12 +124,14 @@ public class AnswerPublicationFragment extends Fragment {
             long time = date.getTime();
             Timestamp ts = new Timestamp(time);
 
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+
             db.collection("answers").add(new HashMap<String, String>() {{
                 put("postId", idPost);
                 put("content", answer);
                 put("datetime", String.valueOf(ts));
                 put("votes", "0");
-                put("username", "overcloveer@gmail.com");
+                put("username", sharedPreferences.getString(EMAIL, ""));
             }});
             Navigation.findNavController(view).popBackStack();
         } else {

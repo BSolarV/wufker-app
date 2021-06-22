@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WufkerApp">
+        <activity android:name=".ProfileEditDetailsActivity"></activity>
+        <activity android:name=".SingUpActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MapActivity">
-
-        </activity>
+        <activity android:name=".MapActivity" />
         <activity
             android:name=".InitActivity"
             android:label="@string/app_name"
