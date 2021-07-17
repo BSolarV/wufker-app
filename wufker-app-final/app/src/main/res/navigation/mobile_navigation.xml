@@ -59,4 +59,9 @@
         android:name="com.messirvedevs.wufker.AnswerPublicationFragment"
         android:label="Responder"
         tools:layout="@layout/fragment_answer_publication" />
+    <fragment
+        android:id="@+id/userProfile"
+        android:name="com.messirvedevs.wufker.UserProfile"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
 </navigation>
