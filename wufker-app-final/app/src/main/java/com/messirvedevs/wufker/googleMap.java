@@ -17,10 +17,14 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -105,12 +109,13 @@ public class googleMap extends Fragment
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Button mapButton = (Button) view.findViewById(R.id.buttonMap);
+        Button mapButton =  (Button) getView().findViewById(R.id.getPlacesButton);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,14 +124,13 @@ public class googleMap extends Fragment
         });
     }
 
-        @Override
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
         getLocationPermission(); // Solicita el permiso al usuario.
         updateLocationUI();// Active la capa de Mi Ubicación y el control relacionado en el mapa
         getDeviceLocation(); // Obtiene la ubicación actual del dispositivo y establece la posición del mapa.
-        getPlaces();
     }
 
     /*
