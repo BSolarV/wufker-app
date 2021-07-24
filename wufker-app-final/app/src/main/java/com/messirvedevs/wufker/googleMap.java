@@ -6,14 +6,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -101,16 +105,23 @@ public class googleMap extends Fragment
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Button mapButton = (Button) view.findViewById(R.id.buttonMap);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPlaces();
+            }
+        });
+    }
+
+        @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
         getLocationPermission(); // Solicita el permiso al usuario.
         updateLocationUI();// Active la capa de Mi Ubicación y el control relacionado en el mapa
         getDeviceLocation(); // Obtiene la ubicación actual del dispositivo y establece la posición del mapa.
-        getPlaces();
-    }
-
-    public void obtenerLugares(View view) {
         getPlaces();
     }
 
@@ -232,7 +243,7 @@ public class googleMap extends Fragment
         sb.append("&radius=1000");
         sb.append("&types=" + "veterinary_care|pet_store");
         sb.append("&sensor=true");
-        sb.append("&key=" + R.string.google_api_key);
+        sb.append("&key=" + getResources().getString(R.string.google_maps_key));
 
         Log.d("Map", "api: " + sb.toString());
 
