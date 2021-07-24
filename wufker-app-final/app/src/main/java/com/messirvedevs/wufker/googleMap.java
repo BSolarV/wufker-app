@@ -2,6 +2,7 @@ package com.messirvedevs.wufker;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,11 +21,23 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class googleMap extends Fragment
@@ -94,10 +107,11 @@ public class googleMap extends Fragment
         getLocationPermission(); // Solicita el permiso al usuario.
         updateLocationUI();// Active la capa de Mi Ubicación y el control relacionado en el mapa
         getDeviceLocation(); // Obtiene la ubicación actual del dispositivo y establece la posición del mapa.
+        getPlaces();
+    }
 
-        LatLng sydney = defaultLocation;
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    public void obtenerLugares(View view) {
+        getPlaces();
     }
 
     /*
@@ -189,6 +203,136 @@ public class googleMap extends Fragment
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
+        }
+    }
+
+    private void getPlaces() {
+        if (map == null) {
+            return;
+        }
+
+        try {
+            if (lastKnownLocation != null) {
+                StringBuilder sbValue = new StringBuilder(sbMethod());
+                PlacesTask placesTask = new PlacesTask();
+                placesTask.execute(sbValue.toString());
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    public StringBuilder sbMethod() {
+        // Ubicación Actual
+        double mLatitude = lastKnownLocation.getLatitude();
+        double mLongitude = lastKnownLocation.getLongitude();
+
+        StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        sb.append("location=" + mLatitude + "," + mLongitude);
+        sb.append("&radius=1000");
+        sb.append("&types=" + "veterinary_care|pet_store");
+        sb.append("&sensor=true");
+        sb.append("&key=" + R.string.google_api_key);
+
+        Log.d("Map", "api: " + sb.toString());
+
+        return sb;
+    }
+
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            urlConnection = (HttpURLConnection) url.openConnection(); // Creating an http connection to communicate with url
+            urlConnection.connect(); // Connecting to url
+            iStream = urlConnection.getInputStream();  // Reading data from url
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+            StringBuffer sb = new StringBuffer();
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+            br.close();
+        } catch (Exception e) {
+            Log.d("Download URL", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+
+        return data;
+    }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<HashMap<String, String>>> {
+        JSONObject jObject;
+
+        // Invoked by execute() method of this object
+        @Override
+        protected List<HashMap<String, String>> doInBackground(String... jsonData) {
+            List<HashMap<String, String>> places = null;
+            Place_JSON placeJson = new Place_JSON();
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                places = placeJson.parse(jObject);
+            } catch (Exception e) {
+                Log.d("Exception", e.toString());
+            }
+            return places;
+        }
+
+        // Executed after the complete execution of doInBackground() method
+        @Override
+        protected void onPostExecute(List<HashMap<String, String>> list) {
+            Log.d("Map", "list size: " + list.size());
+            map.clear(); // Clears all the existing markers;
+            for (int i = 0; i < list.size(); i++) {
+                MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
+                HashMap<String, String> hmPlace = list.get(i); // Getting a place from the places list
+
+                double lat = Double.parseDouble(hmPlace.get("lat")); // Getting latitude of the place
+                double lng = Double.parseDouble(hmPlace.get("lng")); // Getting longitude of the place
+                LatLng latLng = new LatLng(lat, lng);
+                String name = hmPlace.get("place_name"); // Getting name
+                String vicinity = hmPlace.get("vicinity"); // Getting vicinity
+
+                markerOptions.position(latLng); // Setting the position for the marker
+                markerOptions.title(name + " : " + vicinity);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+
+                Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
+
+            }
+        }
+    }
+
+    private class PlacesTask extends AsyncTask<String, Integer, String> {
+        String data = null;
+
+        // Invoked by execute() method of this object
+        @Override
+        protected String doInBackground(String... url) {
+            try {
+                data = downloadUrl(url[0]);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
+        }
+
+        // Executed after the complete execution of doInBackground() method
+        @Override
+        protected void onPostExecute(String result) {
+            ParserTask parserTask = new ParserTask();
+
+            // Start parsing the Google places in JSON format
+            // Invokes the "doInBackground()" method of the class ParserTask
+            parserTask.execute(result);
         }
     }
 }
