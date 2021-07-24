@@ -23,8 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -115,11 +117,12 @@ public class googleMap extends Fragment
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Button mapButton =  (Button) getView().findViewById(R.id.getPlacesButton);
+        ImageButton mapButton =  (ImageButton) getView().findViewById(R.id.getPlacesButton);
+
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPlaces();
+                updateLocation();
             }
         });
     }
@@ -128,6 +131,10 @@ public class googleMap extends Fragment
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
+        updateLocation();
+    }
+
+    private void updateLocation() {
         getLocationPermission(); // Solicita el permiso al usuario.
         updateLocationUI();// Active la capa de Mi Ubicación y el control relacionado en el mapa
         getDeviceLocation(); // Obtiene la ubicación actual del dispositivo y establece la posición del mapa.
@@ -209,6 +216,8 @@ public class googleMap extends Fragment
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                                getPlaces(); // Obtiene las veterinarias cercanas a la ubicación del usuario.
                             }
                         } else {
                             Log.d(LOGTAG, "Current location is null. Using defaults.");

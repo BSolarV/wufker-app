@@ -17,15 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".MapActivity" >
 
-        <Button
+        <ImageButton
             android:id="@+id/getPlacesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:paddingHorizontal="10dp"
-            android:text="@string/obtener_veterinarias"
-            android:textSize="13sp" />
+            android:layout_gravity="top|left"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:background="#B2FFFFFF"
+            android:src="@drawable/ic_baseline_refresh_24" />
     </fragment>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
