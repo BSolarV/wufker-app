@@ -1,6 +1,9 @@
 package com.messirvedevs.wufker;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -313,11 +317,11 @@ public class googleMap extends Fragment
                 String vicinity = hmPlace.get("vicinity"); // Getting vicinity
 
                 markerOptions.position(latLng); // Setting the position for the marker
-                markerOptions.title(name + " : " + vicinity);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                markerOptions.title(name);
+                markerOptions.snippet(vicinity);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
                 Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
-
             }
         }
     }
