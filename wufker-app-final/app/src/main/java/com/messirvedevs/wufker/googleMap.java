@@ -1,10 +1,12 @@
 package com.messirvedevs.wufker;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -22,9 +24,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +55,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 public class googleMap extends Fragment
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, AdapterView.OnItemClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -79,6 +85,13 @@ public class googleMap extends Fragment
     private static final int DEFAULT_ZOOM = 15;
 
     private GoogleMap map;
+
+    // Usadas para la listview y para posicionar el marcador en el mapa
+    private final int MAX_ENTRIES = 5;
+    private List<String> placesNames = new ArrayList();
+    private List<String> placesVicinity = new ArrayList();
+    private List<LatLng> placesLatLngs = new ArrayList();
+    private ArrayAdapter adapter;
 
     public googleMap() {
         // Required empty public constructor
@@ -119,12 +132,37 @@ public class googleMap extends Fragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ImageButton mapButton =  (ImageButton) getView().findViewById(R.id.getPlacesButton);
 
+        // Construye el ListView para mostrar los lugares cercanos
+        adapter = new ArrayAdapter(getContext(), R.layout.places_item, placesNames);
+        ListView lv = view.findViewById(R.id.listview_places);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
+
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLocation();
             }
         });
+    }
+
+    /*
+        Cuando se hace click en un item de la lista de places,
+        se muestra el mapa con el lugar respectivo marcado.
+    */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String name = placesNames.get(position);
+        String vicinity = placesVicinity.get(position);
+        LatLng latLng = placesLatLngs.get(position);
+
+        map.clear(); // Clears all the existing markers;
+        MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
+        markerOptions.position(latLng); // Setting the position for the marker
+        markerOptions.title(name);
+        markerOptions.snippet(vicinity);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
     }
 
     @Override
@@ -318,30 +356,31 @@ public class googleMap extends Fragment
         @Override
         protected void onPostExecute(List<HashMap<String, String>> list) {
             Log.d("Map", "list size: " + list.size());
-            map.clear(); // Clears all the existing markers;
 
             if (list.size() == 0) {
                 Toast.makeText(getContext(), "No se encontraron veterinarias cercanas", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            for (int i = 0; i < list.size(); i++) {
-                MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
-                HashMap<String, String> hmPlace = list.get(i); // Getting a place from the places list
+            placesNames.clear();
+            placesVicinity.clear();
+            placesLatLngs.clear();
 
+            int entries = Math.min(list.size(), MAX_ENTRIES);
+            for (int i = 0; i < entries; i++) {
+                HashMap<String, String> hmPlace = list.get(i); // Getting a place from the places list
                 double lat = Double.parseDouble(hmPlace.get("lat")); // Getting latitude of the place
                 double lng = Double.parseDouble(hmPlace.get("lng")); // Getting longitude of the place
                 LatLng latLng = new LatLng(lat, lng);
                 String name = hmPlace.get("place_name"); // Getting name
                 String vicinity = hmPlace.get("vicinity"); // Getting vicinity
 
-                markerOptions.position(latLng); // Setting the position for the marker
-                markerOptions.title(name);
-                markerOptions.snippet(vicinity);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-                Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
+                placesNames.add(name);
+                placesVicinity.add(vicinity);
+                placesLatLngs.add(latLng);
             }
+
+            adapter.notifyDataSetChanged(); // Actualiza la lista con los lugares respectivos.
         }
     }
 
