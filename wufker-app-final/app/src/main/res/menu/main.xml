@@ -2,4 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item   android:id="@+id/action_search"
+        android:title="Buscar"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="ifRoom|withText"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 </menu>
