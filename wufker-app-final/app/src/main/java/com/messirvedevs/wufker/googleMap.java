@@ -319,6 +319,12 @@ public class googleMap extends Fragment
         protected void onPostExecute(List<HashMap<String, String>> list) {
             Log.d("Map", "list size: " + list.size());
             map.clear(); // Clears all the existing markers;
+
+            if (list.size() == 0) {
+                Toast.makeText(getContext(), "No se encontraron veterinarias cercanas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             for (int i = 0; i < list.size(); i++) {
                 MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
                 HashMap<String, String> hmPlace = list.get(i); // Getting a place from the places list

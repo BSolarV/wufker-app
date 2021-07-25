@@ -24,8 +24,8 @@
             android:layout_gravity="top|left"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:padding="10dp"
-            android:background="#B2FFFFFF"
+            android:padding="8dp"
+            android:background="#E6FFFFFF"
             android:src="@drawable/ic_baseline_refresh_24" />
     </fragment>
 
