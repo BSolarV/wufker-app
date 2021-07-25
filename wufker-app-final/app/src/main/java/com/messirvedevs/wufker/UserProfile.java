@@ -1,5 +1,7 @@
 package com.messirvedevs.wufker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +34,11 @@ public class UserProfile extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public UserProfile() {
         // Required empty public constructor
@@ -60,5 +76,19 @@ public class UserProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_profile, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+
+        Task<QuerySnapshot> data = db.collection("Users").whereEqualTo("email", sharedPreferences.getString(EMAIL, "")).get();
+        data.addOnSuccessListener(result -> {
+            List<DocumentSnapshot> users = result.getDocuments();
+            DocumentSnapshot user = users.get(0);
+            Toast.makeText(this.getContext(), user.get("lastname").toString(), Toast.LENGTH_LONG).show();
+        });
     }
 }
