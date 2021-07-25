@@ -12,6 +12,10 @@
             android:id="@+id/googleMap"
             android:icon="@drawable/common_google_signin_btn_icon_light_focused"
             android:title= "Mapa" />
+        <item
+            android:id="@+id/userProfile"
+            android:icon="@drawable/baseline_account_circle_18"
+            android:title="Perfil" />
 
     </group>
 </menu>

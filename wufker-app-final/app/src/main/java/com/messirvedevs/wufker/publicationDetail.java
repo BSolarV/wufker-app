@@ -142,8 +142,6 @@ public class publicationDetail extends Fragment {
 
         ans_list.clear();
 
-
-
         // Get post and answers from database
 
         Task<DocumentSnapshot> data = db.collection("posts").document(id).get();

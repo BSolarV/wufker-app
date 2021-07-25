@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_foroSelector_to_googleMap"
             app:destination="@id/googleMap" />
+        <action
+            android:id="@+id/action_foroSelector_to_userProfile"
+            app:destination="@id/userProfile" />
     </fragment>
     <fragment
         android:id="@+id/publicationSelector"
@@ -62,6 +65,6 @@
     <fragment
         android:id="@+id/userProfile"
         android:name="com.messirvedevs.wufker.UserProfile"
-        android:label="fragment_user_profile"
+        android:label="Perfil"
         tools:layout="@layout/fragment_user_profile" />
 </navigation>

@@ -162,7 +162,7 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
-        searchView.setQueryHint("Search");
+        searchView.setQueryHint("Buscar");
 
         super.onCreateOptionsMenu(menu, inflater);
 

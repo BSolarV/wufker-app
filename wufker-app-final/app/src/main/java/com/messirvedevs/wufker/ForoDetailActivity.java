@@ -121,7 +121,12 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
         post_list.clear();
         id_list.clear();
 
+        Toast.makeText(this, "Obteniendo DB", Toast.LENGTH_LONG).show();
+
         Task<QuerySnapshot> data = db.collection("posts").whereEqualTo("category", category).get();
+
+        Toast.makeText(this, data.toString(), Toast.LENGTH_LONG).show();
+
         data.addOnSuccessListener(command -> {
             String text = "Selected: "+category+"\n"+command.size()+"\n";
             if ( data.isComplete() ){
@@ -136,6 +141,9 @@ public class ForoDetailActivity extends AppCompatActivity implements AdapterView
                 //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             }
+        });
+        data.addOnFailureListener(command -> {
+            Toast.makeText(this, "Error:" + command.toString(), Toast.LENGTH_LONG).show();
         });
     }
 
