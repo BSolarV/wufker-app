@@ -141,6 +141,10 @@ public class googleMap extends Fragment
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (map != null) {
+                    map.clear();
+                }
+
                 updateLocation();
             }
         });
@@ -251,7 +255,7 @@ public class googleMap extends Fragment
                             // Establece la posición de la camara del mapa a la ubicación actual del dispositivo
                             lastKnownLocation = task.getResult();
                             if (lastKnownLocation != null) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
@@ -260,7 +264,7 @@ public class googleMap extends Fragment
                         } else {
                             Log.d(LOGTAG, "Current location is null. Using defaults.");
                             Log.e(LOGTAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
+                            map.animateCamera(CameraUpdateFactory
                                     .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
                             map.getUiSettings().setMyLocationButtonEnabled(false);
                         }
