@@ -1,9 +1,11 @@
 package com.messirvedevs.wufker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,9 +22,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
+import com.messirvedevs.wufker.objects.User;
 
 import java.security.AccessController;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,31 +96,55 @@ public class UserProfile extends Fragment {
     public void onResume() {
         super.onResume();
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+         try {
+             Button logoutButton = getView().findViewById(R.id.logoutButton);
+             logoutButton.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                     editor.remove(EMAIL);
+                     editor.apply();
+                     backToLogin();
+                 }
+             });
+         }catch (Exception e){
+             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+         }
 
-        Task<QuerySnapshot> data = db.collection("users").whereEqualTo("email",sharedPreferences.getString(EMAIL, "")).get();
-        data.addOnSuccessListener(result -> {
-            List<DocumentSnapshot> users = result.getDocuments();
-            /*if(users.size()== 0 ){
-                Toast.makeText(this.getContext(), sharedPreferences.getString(EMAIL, ""), Toast.LENGTH_LONG).show();
+        try {
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+            String email = sharedPreferences.getString(EMAIL, "");
+            Task<DocumentSnapshot> data = db.collection("users").document(email).get();
+            data.addOnSuccessListener(result -> {
+                User user = result.toObject(User.class);
 
-            }*/
+                Toast.makeText(getContext(), "getData", Toast.LENGTH_SHORT).show();
 
-//            users =  result.getDocuments();
-            DocumentSnapshot user =  users.get(0);
-            TextView nombre =  (TextView) getView().findViewById(R.id.ProfileName);
-            TextView correo = (TextView) getView().findViewById(R.id.ProfileSince);
-            TextView fecha = (TextView) getView().findViewById(R.id.fechaNacimiento);
+                TextView nombre =  (TextView) getView().findViewById(R.id.ProfileName);
+                TextView correo = (TextView) getView().findViewById(R.id.ProfileSince);
+                TextView fecha = (TextView) getView().findViewById(R.id.fechaNacimiento);
+                TextView profileVeterinario = (TextView) getView().findViewById(R.id.profileVeterinario);
 
 
-            nombre.setText(user.get("firstname").toString() + " " + user.get("lastname").toString());
-            correo.setText(sharedPreferences.getString(EMAIL, ""));
-            fecha.setText(user.get("birthdate").toString());
-            Switch isvet = (Switch) getView().findViewById(R.id.vetSwitch);
-            if (user.get("isVet").toString()=="true"){
-                isvet.setChecked(true);
-            }
+                nombre.setText(user.getFirstname() + " " + user.getLastname());
+                correo.setText(email);
+                fecha.setText(new SimpleDateFormat("dd/MM/yyyy").format(user.getBirthdate()));
+                Switch isVet = getView().findViewById(R.id.vetSwitch);
+                if (user.getVet()){
+                    profileVeterinario.setText("Veterinario");
+                    isVet.setChecked(true);
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
 
-        });
+    }
+
+    public void backToLogin(){
+        Intent login = new Intent(getContext(), InitActivity.class);
+        startActivity(login);
+        getActivity().finish();
     }
 }

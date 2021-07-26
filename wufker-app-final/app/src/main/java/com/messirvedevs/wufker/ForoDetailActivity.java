@@ -10,24 +10,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
-import com.messirvedevs.wufker.databinding.ActivityForoDetailBinding;
+import com.messirvedevs.wufker.objects.ForoPost;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ForoDetailActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {

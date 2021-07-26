@@ -11,11 +11,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,12 +22,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.adapters.AnswerListAdapter;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
+import com.messirvedevs.wufker.objects.Answer;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -157,17 +157,19 @@ public class publicationDetail extends Fragment {
             answersQuery.addOnSuccessListener(content -> {
                 List<DocumentSnapshot> docList = content.getDocuments();
                 Collections.sort(docList, new Comparator<DocumentSnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
-                        if( Objects.isNull( u1.get("datetime", Timestamp.class) ) || Objects.isNull( u2.get("datetime", Timestamp.class) )  )
-                            return (u1.get("datetime", Timestamp.class)).compareTo( u2.get("datetime", Timestamp.class) );
-                        else return 0;
-                    } });
+                    @Override
+                    public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
+                        try{
+                            return u1.get("datetime", Date.class).compareTo(u2.get("datetime", Date.class));
+                        }catch (Exception e){
+                            return 0;
+                        }
+                    }
+                });
                 if (answersQuery.isComplete()) {
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);
-
                         Answer ans = doc.toObject(Answer.class);
                         ans.setId( doc.getId() );
                         ans_list.add( ans );

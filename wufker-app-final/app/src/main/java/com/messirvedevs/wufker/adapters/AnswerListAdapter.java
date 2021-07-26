@@ -4,23 +4,26 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.messirvedevs.wufker.Answer;
+import com.messirvedevs.wufker.objects.Answer;
 import com.messirvedevs.wufker.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 public class AnswerListAdapter extends ArrayAdapter<Answer> {
 
@@ -33,6 +36,7 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
         super(context, 0, answerList);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Answer answer = getItem(position);
@@ -40,7 +44,7 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.answer_list_item, parent, false);
         }
         TextView answerDate = convertView.findViewById(R.id.AnswerDate);
-        answerDate.setText( new SimpleDateFormat("MM/dd/yyyy HH:mm").format(answer.getDatetime()) );
+        answerDate.setText( new SimpleDateFormat("dd/MM/yyyy HH:mm").format(answer.getDatetime()) );
         TextView answerContent = convertView.findViewById(R.id.AnswerContent);
         answerContent.setText( answer.getContent() );
         TextView answerEmail = convertView.findViewById(R.id.AnswerEmail);
@@ -104,6 +108,23 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
             });
         }
 
+        // Badges
+
+        TextView answerBadges = convertView.findViewById(R.id.AnswerBadges);
+
+        SpannableString badges = new SpannableString("  ");
+
+        if( !Objects.isNull( answer.getBadges() ) ){
+            for (String badge: answer.getBadges() ) {
+                if( badge.equals("veterinario") ) {
+                    Drawable d = AppCompatResources.getDrawable(getContext(), R.drawable.round_verified_24);
+                    d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+                    ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_CENTER);
+                    badges.setSpan(span, 0,  1, badges.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+        }
+        answerBadges.setText(badges);
         return convertView;
     }
 

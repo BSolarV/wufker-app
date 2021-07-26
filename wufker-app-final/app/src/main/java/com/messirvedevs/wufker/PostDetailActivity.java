@@ -1,13 +1,10 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,18 +15,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.type.DateTime;
 import com.messirvedevs.wufker.databinding.ActivityPostDetailBinding;
+import com.messirvedevs.wufker.objects.Answer;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -131,12 +128,14 @@ public class PostDetailActivity extends AppCompatActivity {
             InForoUser.setText(command.get("authorEmail").toString());
             Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", id).get();
             answersQuery.addOnSuccessListener(content -> {
-                List<DocumentSnapshot> docList = content.getDocuments();
-                Collections.sort(docList, new Comparator<DocumentSnapshot>() {
-                    @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
-                        return Timestamp.valueOf( u1.get("datetime").toString() ).compareTo(Timestamp.valueOf( u2.get("datetime").toString() ));
-                    } });
                 if (answersQuery.isComplete()) {
+                    List<DocumentSnapshot> docList = content.getDocuments();
+                    Collections.sort(docList, new Comparator<DocumentSnapshot>() {
+                        @Override
+                        public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
+                            return u1.get("datetime", Date.class).compareTo(u2.get("datetime", Date.class));
+                        }
+                    });
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);

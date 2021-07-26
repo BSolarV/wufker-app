@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,7 +20,6 @@ public class SingUpActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "USER_DATA_WUFKER";
     public static final String EMAIL = "EMAIL";
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +31,34 @@ public class SingUpActivity extends AppCompatActivity {
 
     private void setup() {
         Button singup = findViewById(R.id.registerButton);
-        EditText editTextTextEmailAddress = findViewById(R.id.editTextFirstName);
-        EditText editTextTextPassword = findViewById(R.id.editTextLastName);
+        EditText editTextTextEmailAddress = findViewById(R.id.editTextTextEmailAddress);
+        EditText editTextTextPassword = findViewById(R.id.editTextTextPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
 
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextTextEmailAddress.getText().toString().isEmpty() && !editTextTextPassword.getText().toString().isEmpty() && !editTextConfirmPassword.getText().toString().isEmpty()) {
-                    if( editTextTextPassword.getText().toString().equals( editTextConfirmPassword.getText().toString() ) ){
-                        FirebaseAuth.getInstance()
-                                .createUserWithEmailAndPassword(editTextTextEmailAddress.getText().toString(),
-                                        editTextTextPassword.getText().toString()).addOnCompleteListener(it -> {
-                            if (it.isSuccessful()) {
-                                showProfileDetails(it.getResult().getUser().getEmail());
-                            } else {
-                                showAlert(it.getException().toString());
-                            }
-                        });
-                    }
+                try {
+                    if (!editTextTextEmailAddress.getText().toString().isEmpty() && !editTextTextPassword.getText().toString().isEmpty() && !editTextConfirmPassword.getText().toString().isEmpty()) {
+                        if( editTextTextPassword.getText().toString().equals( editTextConfirmPassword.getText().toString() ) ){
+                            FirebaseAuth.getInstance()
+                                    .createUserWithEmailAndPassword(editTextTextEmailAddress.getText().toString(),
+                                            editTextTextPassword.getText().toString()).addOnCompleteListener(it -> {
+                                if (it.isSuccessful()) {
+                                    showProfileDetails(it.getResult().getUser().getEmail());
+                                } else {
+                                    showAlert(it.getException().toString());
+                                }
+                            });
+                        }else {
+                            showAlert("Las contraseñas no coinciden.");
+                        }
 
+                    }
+                }catch (Exception e){
+                    Toast.makeText(SingUpActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                 }
+
             }
         } );
     }
@@ -73,4 +80,6 @@ public class SingUpActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

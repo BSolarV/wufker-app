@@ -9,9 +9,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.messirvedevs.wufker.objects.User
 
 
 class InitActivity : AppCompatActivity() {
@@ -19,8 +23,11 @@ class InitActivity : AppCompatActivity() {
     private val GOOGLE_SIGN_IN = 100
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
+    private val db = FirebaseFirestore.getInstance()
+
     val SHARED_PREFS = "USER_DATA_WUFKER"
     val EMAIL = "EMAIL"
+    val FULLNAME = "FULLNAME"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +44,11 @@ class InitActivity : AppCompatActivity() {
     private fun setup() {
 
         val sharedPreferences: SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
-        if( sharedPreferences.getString(EMAIL, "") != "" ) showHome(sharedPreferences.getString(EMAIL, "")  ?: "", "GOOGLE")
+        if (sharedPreferences.getString(
+                EMAIL,
+                ""
+            ) != ""
+        ) showHome(sharedPreferences.getString(EMAIL, "") ?: "", "GOOGLE")
 
         title = "Autenticación"
         val singup: Button = findViewById(R.id.registerButton)
@@ -57,7 +68,23 @@ class InitActivity : AppCompatActivity() {
                         editTextTextPassword.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(it.result?.user?.email ?: "", "BASIC")
+
+                            val editor = sharedPreferences.edit()
+                            val email = editTextTextEmailAddress.text.toString()
+                            db.collection("users").document(email).get()
+                                .addOnCompleteListener(OnCompleteListener<DocumentSnapshot?> { task ->
+                                    if (task.isSuccessful) {
+                                        val document = task.result
+                                        if (document!!.exists()) {
+                                            val user = document!!.toObject(User::class.java)
+                                            editor.putString(EMAIL, email)
+                                            editor.putString(FULLNAME, user!!.firstname + " " + user.lastname)
+                                            editor.apply()
+                                            showHome(it.result?.user?.email ?: "", "BASIC")
+                                        }
+                                    }
+                                })
+
                         } else {
                             showAlert(it.toString())
                         }
@@ -82,7 +109,7 @@ class InitActivity : AppCompatActivity() {
         }*/
     }
 
-    private fun showAlert(msg:String) {
+    private fun showAlert(msg: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
         builder.setMessage(msg)
@@ -92,22 +119,22 @@ class InitActivity : AppCompatActivity() {
     }
 
     private fun showHome(email: String, provider: String) {
-        val homeIntent:Intent = Intent( this, ForoActivity::class.java ).apply {
+        val homeIntent: Intent = Intent(this, ForoActivity::class.java).apply {
             putExtra("email", email)
-            putExtra( "provider", provider )
+            putExtra("provider", provider)
         }
         startActivity(homeIntent)
         finish()
     }
 
     private fun showSingUp() {
-        val singUpIntent:Intent = Intent( this, SingUpActivity::class.java )
+        val singUpIntent: Intent = Intent(this, SingUpActivity::class.java)
         startActivity(singUpIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == GOOGLE_SIGN_IN) {
+        if (requestCode == GOOGLE_SIGN_IN) {
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
@@ -121,19 +148,19 @@ class InitActivity : AppCompatActivity() {
                     showAlert("entre")
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        showAlert("firebase")
-                        if (it.isSuccessful) {
-                            showHome(account.email ?: "", "GOOGLE")
-                        } else {
-                            showAlert(it.toString())
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            showAlert("firebase")
+                            if (it.isSuccessful) {
+                                showHome(account.email ?: "", "GOOGLE")
+                            } else {
+                                showAlert(it.toString())
+                            }
                         }
-                    }
                 }
             } catch (e: ApiException) {
                 showHome("overcloveer@gmail.com", "GOOGLE")
             }
         }
-
     }
 }

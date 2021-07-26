@@ -1,9 +1,11 @@
 package com.messirvedevs.wufker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -15,8 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.messirvedevs.wufker.objects.Answer;
+import com.messirvedevs.wufker.objects.User;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -46,6 +56,7 @@ public class AnswerPublicationFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String category, postTitle, postContent ,idPost;
     private String answer;
+    private User user;
 
     public AnswerPublicationFragment() {
         // Required empty public constructor
@@ -127,14 +138,34 @@ public class AnswerPublicationFragment extends Fragment {
             Timestamp ts = new Timestamp(time);
 
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+            String email = sharedPreferences.getString(EMAIL, "");
 
             String id = db.collection("Answers").document().getId();
-            Answer answerObj = new Answer(sharedPreferences.getString(EMAIL, ""), answer, idPost, date, 0, new HashMap<String, Boolean>());
-            answerObj.setId(id);
-            db.collection("answers").document(id).set(answerObj);
+            ArrayList<String> badges = new ArrayList<String>();
+            db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            user = document.toObject(User.class);
 
-            Navigation.findNavController(view).popBackStack();
+                            if( user.getVet() ) badges.add("veterinario");
 
+                            Answer answerObj = new Answer(email, answer, idPost, date, 0, new HashMap<String, Boolean>(), badges);
+                            answerObj.setId(id);
+
+                            db.collection("answers").document(id).set(answerObj);
+                            Navigation.findNavController(view).popBackStack();
+
+                        } else {
+                            backToLogin();
+                        }
+                    } else {
+                        backToLogin();
+                    }
+                }
+            });
         } else {
             Toast.makeText(getContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
         }
@@ -142,5 +173,11 @@ public class AnswerPublicationFragment extends Fragment {
 
     public void cancelar(View view) {
         Navigation.findNavController(view).popBackStack();
+    }
+
+    public void backToLogin(){
+        Intent login = new Intent(getContext(), InitActivity.class);
+        startActivity(login);
+        getActivity().finish();
     }
 }

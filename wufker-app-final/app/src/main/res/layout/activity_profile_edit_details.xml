@@ -73,6 +73,8 @@
                         android:inputType="textEmailAddress"
                         android:textAlignment="center"
                         android:textColor="@color/text_white"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:textColorHint="@color/text_white" />
 
                     <EditText
@@ -85,18 +87,24 @@
                         android:inputType="text"
                         android:textAlignment="center"
                         android:textColor="@color/text_white"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:textColorHint="@color/text_white" />
 
-                    <EditText
-                        android:id="@+id/editTextBirthday"
+                    <Button
+                        android:id="@+id/buttonBirthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
+                        style="?android:spinnerStyle"
                         android:gravity="center_horizontal"
                         android:hint="Fecha de Nacimiento"
-                        android:inputType="date"
                         android:textAlignment="center"
                         android:textColor="@color/text_white"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textSize="18dp"
                         android:textColorHint="@color/text_white" />
 
                     <Switch
@@ -105,11 +113,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="30dp"
-                        android:text="Veterinario  "
+                        android:text="Veterinario"
+                        android:textSize="18dp"
                         android:textColor="@color/text_white" />
 
                     <Button
                         android:id="@+id/registerButton"
+                        android:layout_margin="40dp"
+                        android:layout_marginTop="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Guardar"
