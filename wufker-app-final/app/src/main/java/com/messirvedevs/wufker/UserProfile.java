@@ -93,11 +93,16 @@ public class UserProfile extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
-        Task<QuerySnapshot> data = db.collection("Users").whereEqualTo("email", sharedPreferences.getString(EMAIL, "")).get();
+        Task<QuerySnapshot> data = db.collection("users").whereEqualTo("email","cajara@sansano.usm.cl").get();
         data.addOnSuccessListener(result -> {
-            List<DocumentSnapshot> users = new ArrayList<DocumentSnapshot>();
-            /*DocumentSnapshot user = (DocumentSnapshot) result.getDocuments();;
-            //Toast.makeText(this.getContext(), user.get("lastname").toString(), Toast.LENGTH_LONG).show();
+            List<DocumentSnapshot> users = result.getDocuments();
+            /*if(users.size()== 0 ){
+                Toast.makeText(this.getContext(), sharedPreferences.getString(EMAIL, ""), Toast.LENGTH_LONG).show();
+
+            }*/
+
+//            users =  result.getDocuments();
+            DocumentSnapshot user =  users.get(0);
             TextView nombre =  (TextView) getView().findViewById(R.id.ProfileName);
             TextView correo = (TextView) getView().findViewById(R.id.ProfileSince);
             TextView fecha = (TextView) getView().findViewById(R.id.fechaNacimiento);
@@ -110,7 +115,7 @@ public class UserProfile extends Fragment {
             if (user.get("isVet").toString()=="true"){
                 isvet.setChecked(true);
             }
-            */
+
         });
     }
 }
