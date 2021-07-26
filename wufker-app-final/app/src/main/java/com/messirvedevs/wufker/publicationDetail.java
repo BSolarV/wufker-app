@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -156,17 +157,19 @@ public class publicationDetail extends Fragment {
             answersQuery.addOnSuccessListener(content -> {
                 List<DocumentSnapshot> docList = content.getDocuments();
                 Collections.sort(docList, new Comparator<DocumentSnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
-                        if( Objects.isNull( u1.get("datetime", Timestamp.class) ) || Objects.isNull( u2.get("datetime", Timestamp.class) )  )
-                            return (u1.get("datetime", Timestamp.class)).compareTo( u2.get("datetime", Timestamp.class) );
-                        else return 0;
-                    } });
+                    @Override
+                    public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
+                        try{
+                            return u1.get("datetime", Date.class).compareTo(u2.get("datetime", Date.class));
+                        }catch (Exception e){
+                            return 0;
+                        }
+                    }
+                });
                 if (answersQuery.isComplete()) {
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);
-
                         Answer ans = doc.toObject(Answer.class);
                         ans.setId( doc.getId() );
                         ans_list.add( ans );

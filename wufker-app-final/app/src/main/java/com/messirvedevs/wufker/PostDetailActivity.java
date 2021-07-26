@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -127,12 +128,14 @@ public class PostDetailActivity extends AppCompatActivity {
             InForoUser.setText(command.get("authorEmail").toString());
             Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", id).get();
             answersQuery.addOnSuccessListener(content -> {
-                List<DocumentSnapshot> docList = content.getDocuments();
-                Collections.sort(docList, new Comparator<DocumentSnapshot>() {
-                    @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
-                        return Timestamp.valueOf( u1.get("datetime").toString() ).compareTo(Timestamp.valueOf( u2.get("datetime").toString() ));
-                    } });
                 if (answersQuery.isComplete()) {
+                    List<DocumentSnapshot> docList = content.getDocuments();
+                    Collections.sort(docList, new Comparator<DocumentSnapshot>() {
+                        @Override
+                        public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
+                            return u1.get("datetime", Date.class).compareTo(u2.get("datetime", Date.class));
+                        }
+                    });
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);
