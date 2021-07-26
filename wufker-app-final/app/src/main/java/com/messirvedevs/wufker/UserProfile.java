@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -17,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
 
+import java.security.AccessController;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +36,9 @@ public class UserProfile extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    //TextView veterinario = findViewById(R.id.ProfileSince); //este será el switch de veterinario
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -86,9 +95,22 @@ public class UserProfile extends Fragment {
 
         Task<QuerySnapshot> data = db.collection("Users").whereEqualTo("email", sharedPreferences.getString(EMAIL, "")).get();
         data.addOnSuccessListener(result -> {
-            List<DocumentSnapshot> users = result.getDocuments();
-            DocumentSnapshot user = users.get(0);
-            Toast.makeText(this.getContext(), user.get("lastname").toString(), Toast.LENGTH_LONG).show();
+            List<DocumentSnapshot> users = new ArrayList<DocumentSnapshot>();
+            /*DocumentSnapshot user = (DocumentSnapshot) result.getDocuments();;
+            //Toast.makeText(this.getContext(), user.get("lastname").toString(), Toast.LENGTH_LONG).show();
+            TextView nombre =  (TextView) getView().findViewById(R.id.ProfileName);
+            TextView correo = (TextView) getView().findViewById(R.id.ProfileSince);
+            TextView fecha = (TextView) getView().findViewById(R.id.fechaNacimiento);
+
+
+            nombre.setText(user.get("firstname").toString() + " " + user.get("lastname").toString());
+            correo.setText(sharedPreferences.getString(EMAIL, ""));
+            fecha.setText(user.get("birthdate").toString());
+            Switch isvet = (Switch) getView().findViewById(R.id.vetSwitch);
+            if (user.get("isVet").toString()=="true"){
+                isvet.setChecked(true);
+            }
+            */
         });
     }
 }
