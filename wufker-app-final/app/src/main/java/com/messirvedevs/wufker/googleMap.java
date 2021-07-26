@@ -82,7 +82,7 @@ public class googleMap extends Fragment
 
     // Una ubicación y un zoom por defecto para utilizar en caso que no se concedan los permisos.
     private final LatLng defaultLocation = new LatLng(-29.978488, -71.341683);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 14;
 
     private GoogleMap map;
 
