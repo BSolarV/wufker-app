@@ -6,16 +6,16 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
-    private Boolean isVet;
+    private Boolean vet;
     private Date birthdate;
 
     public User(){}
 
-    public User(String email, String firstname, String lastname, Boolean isVet, Date birthdate) {
+    public User(String email, String firstname, String lastname, Boolean vet, Date birthdate) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.isVet = isVet;
+        this.vet = vet;
         this.birthdate = birthdate;
     }
 
@@ -44,11 +44,11 @@ public class User {
     }
 
     public Boolean getVet() {
-        return isVet;
+        return vet;
     }
 
     public void setVet(Boolean vet) {
-        isVet = vet;
+        this.vet = vet;
     }
 
     public Date getBirthdate() {

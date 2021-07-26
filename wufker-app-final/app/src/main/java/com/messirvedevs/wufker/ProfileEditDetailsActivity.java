@@ -113,8 +113,9 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                     }catch (Exception e){
                         birthdate = new Date();
                     }
-                    User user = new User(email, editTextFirstName.getText().toString(), editTextLastName.getText().toString(), switchVet.isActivated(), birthdate);
-
+                    Toast.makeText(ProfileEditDetailsActivity.this, String.valueOf(switchVet.isChecked()), Toast.LENGTH_SHORT).show();
+                    User user = new User(email, editTextFirstName.getText().toString(), editTextLastName.getText().toString(), switchVet.isChecked(), birthdate);
+                    Toast.makeText(ProfileEditDetailsActivity.this, String.valueOf(user.getVet()), Toast.LENGTH_SHORT).show();
                     db.collection("users").document(sharedPreferences.getString(EMAIL, "")).set(user);
                     showHome();
 
