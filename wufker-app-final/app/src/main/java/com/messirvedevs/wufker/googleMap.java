@@ -88,6 +88,9 @@ public class googleMap extends Fragment
     private List<LatLng> placesLatLngs = new ArrayList();
     private ArrayAdapter adapter;
 
+    private Marker marker;
+    MenuItem searchItem;
+
     public googleMap() {
         // Required empty public constructor
     }
@@ -150,7 +153,7 @@ public class googleMap extends Fragment
     @Override
     public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
         inflater.inflate(R.menu.map_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.map_search);
+        searchItem = menu.findItem(R.id.map_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setQueryHint("Buscar");
@@ -183,14 +186,25 @@ public class googleMap extends Fragment
         String vicinity = placesVicinity.get(position);
         LatLng latLng = placesLatLngs.get(position);
 
-        map.clear(); // Clears all the existing markers;
-        MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
-        markerOptions.position(latLng); // Setting the position for the marker
-        markerOptions.title(name);
-        markerOptions.snippet(vicinity);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        if (searchItem != null) {
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            searchView.clearFocus();
+        }
 
-        Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
+        map.clear(); // Clears all the existing markers;
+        if (marker != null && marker.getTitle().equals(name)) {
+            marker.setTitle("");
+            marker.remove();
+        } else {
+            MarkerOptions markerOptions = new MarkerOptions(); // Creating a marker
+            markerOptions.position(latLng); // Setting the position for the marker
+            markerOptions.title(name);
+            markerOptions.snippet(vicinity);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            marker = map.addMarker(markerOptions); // Placing a marker on the touched position
+
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
+        }
     }
 
     @Override
