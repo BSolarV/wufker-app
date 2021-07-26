@@ -57,6 +57,9 @@ class InitActivity : AppCompatActivity() {
                         editTextTextPassword.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
+                            val editor = sharedPreferences.edit()
+                            editor.putString(EMAIL, editTextTextEmailAddress.text.toString())
+                            editor.apply()
                             showHome(it.result?.user?.email ?: "", "BASIC")
                         } else {
                             showAlert(it.toString())

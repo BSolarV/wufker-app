@@ -1,5 +1,6 @@
-package com.messirvedevs.wufker;
+package com.messirvedevs.wufker.objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +13,19 @@ public class Answer {
     private Date datetime;
     private int votes;
     private HashMap<String, Boolean> voters;
+    private ArrayList<String> badges;
 
     public Answer() {
+    }
+
+    public Answer( String username, String content, String postId, Date datetime, int votes, HashMap<String, Boolean> voters, ArrayList<String> badges) {
+        this.username = username;
+        this.content = content;
+        this.postId = postId;
+        this.datetime = datetime;
+        this.votes = votes;
+        this.voters = voters;
+        this.badges = badges;
     }
 
     public String getId() {
@@ -22,15 +34,6 @@ public class Answer {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Answer( String username, String content, String postId, Date datetime, int votes, HashMap<String, Boolean> voters) {
-        this.username = username;
-        this.content = content;
-        this.postId = postId;
-        this.datetime = datetime;
-        this.votes = votes;
-        this.voters = voters;
     }
 
     public String getUsername() {
@@ -79,5 +82,13 @@ public class Answer {
 
     public void setVotes(int votes) {
         this.votes = votes;
+    }
+
+    public ArrayList<String> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(ArrayList<String> badges) {
+        this.badges = badges;
     }
 }

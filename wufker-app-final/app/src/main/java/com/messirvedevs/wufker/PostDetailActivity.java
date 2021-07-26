@@ -1,13 +1,10 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,12 +15,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.type.DateTime;
 import com.messirvedevs.wufker.databinding.ActivityPostDetailBinding;
+import com.messirvedevs.wufker.objects.Answer;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

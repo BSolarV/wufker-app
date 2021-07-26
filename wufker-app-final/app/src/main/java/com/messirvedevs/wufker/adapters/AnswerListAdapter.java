@@ -10,15 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.messirvedevs.wufker.Answer;
+import com.messirvedevs.wufker.objects.Answer;
 import com.messirvedevs.wufker.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 

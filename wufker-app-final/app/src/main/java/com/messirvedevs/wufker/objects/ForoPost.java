@@ -1,4 +1,4 @@
-package com.messirvedevs.wufker;
+package com.messirvedevs.wufker.objects;
 
 public class ForoPost {
     private String id;
