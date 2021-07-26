@@ -1,21 +1,18 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,12 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +34,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -47,6 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -58,10 +53,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class googleMap extends Fragment
-        implements OnMapReadyCallback, AdapterView.OnItemClickListener {
+        implements OnMapReadyCallback, AdapterView.OnItemClickListener,
+        SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -87,7 +82,7 @@ public class googleMap extends Fragment
     private GoogleMap map;
 
     // Usadas para la listview y para posicionar el marcador en el mapa
-    private final int MAX_ENTRIES = 5;
+    private final int MAX_ENTRIES = 10;
     private List<String> placesNames = new ArrayList();
     private List<String> placesVicinity = new ArrayList();
     private List<LatLng> placesLatLngs = new ArrayList();
@@ -116,6 +111,8 @@ public class googleMap extends Fragment
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -150,10 +147,36 @@ public class googleMap extends Fragment
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        inflater.inflate(R.menu.map_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.map_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint("Buscar");
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) { return true; }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) { return true; }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) { return true; }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.getFilter().filter(newText);
+        return true;
+    }
+
     /*
-        Cuando se hace click en un item de la lista de places,
-        se muestra el mapa con el lugar respectivo marcado.
-    */
+    Cuando se hace click en un item de la lista de places,
+    se muestra el mapa con el lugar respectivo marcado.
+*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String name = placesNames.get(position);
@@ -166,6 +189,7 @@ public class googleMap extends Fragment
         markerOptions.title(name);
         markerOptions.snippet(vicinity);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
         Marker m = map.addMarker(markerOptions); // Placing a marker on the touched position
     }
 
