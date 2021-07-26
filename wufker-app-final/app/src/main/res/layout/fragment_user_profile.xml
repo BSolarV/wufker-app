@@ -11,9 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="246dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -31,44 +32,62 @@
                     android:id="@+id/ProfileName"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
-                    android:text="TextView"
+                    android:text="Nombre + apellido"
                     android:textColor="@color/text_white" />
 
                 <TextView
                     android:id="@+id/ProfileSince"
                     android:layout_width="match_parent"
                     android:layout_height="47dp"
-                    android:text="TextView"
+                    android:text="Email"
                     android:textColor="@color/text_white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fechaNacimiento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_white"
+                        android:text="Fecha" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/veterinario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_white"
+                            android:text="No Veterinario" />
+
+                        <Switch
+                            android:id="@+id/vetSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:clickable="false"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="135dp"
-            android:background="@drawable/card_dark"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/ProfilePets"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dp"
-                    android:text="@string/ProfilePets"
-                    android:textColor="@color/text_white" />
-
-                <GridView
-                    android:id="@+id/ProfilePetsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

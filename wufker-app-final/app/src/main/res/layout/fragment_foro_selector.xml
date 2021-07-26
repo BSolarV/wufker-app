@@ -23,7 +23,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <TextView
@@ -31,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/card_dark"
+                android:padding="10dp"
                 android:text="Enfermedades"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -46,7 +46,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <TextView
@@ -54,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/card_dark"
+                android:padding="10dp"
                 android:text="Consejos"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -68,7 +68,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <TextView
@@ -76,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/card_dark"
+                android:padding="10dp"
                 android:text="Comportamiento"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -90,7 +90,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <TextView
@@ -98,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/card_dark"
+                android:padding="10dp"
                 android:text="Alimentación"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -112,14 +112,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/CategoriasMiscelaneos"
-                android:layout_width="453dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/card_dark"
+                android:padding="10dp"
                 android:text="Misceláneos"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
@@ -130,12 +130,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
-
-        <Button
-            android:id="@+id/mapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ver Mapa" />
 
     </LinearLayout>
 

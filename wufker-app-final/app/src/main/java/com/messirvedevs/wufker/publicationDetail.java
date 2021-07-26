@@ -1,9 +1,10 @@
 package com.messirvedevs.wufker;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -14,11 +15,13 @@ import android.widget.ArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.messirvedevs.wufker.adapters.AnswerListAdapter;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 
 import java.sql.Timestamp;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,9 +55,9 @@ public class publicationDetail extends Fragment {
     private ArrayList<Answer> answers;
     private TextView inForoTitle,InForoUser,InForoQuestion;
 
-    private List<String> ans_list = new ArrayList();
+    private List<Answer> ans_list = new ArrayList();
 
-    private ArrayAdapter adapter;
+    private AnswerListAdapter adapter;
 
     private String id,category;
 
@@ -129,7 +133,7 @@ public class publicationDetail extends Fragment {
 
         id = getArguments().getString("postId");
 
-        adapter = new ArrayAdapter(getContext(), R.layout.list_item2, ans_list );
+        adapter = new AnswerListAdapter(getContext(), ans_list );
         ListView InForoAnswers = (ListView) getView().findViewById(R.id.InForoAnswers);
 
         InForoAnswers.setAdapter(adapter);
@@ -142,8 +146,6 @@ public class publicationDetail extends Fragment {
 
         ans_list.clear();
 
-
-
         // Get post and answers from database
 
         Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
@@ -155,16 +157,22 @@ public class publicationDetail extends Fragment {
             answersQuery.addOnSuccessListener(content -> {
                 List<DocumentSnapshot> docList = content.getDocuments();
                 Collections.sort(docList, new Comparator<DocumentSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override public int compare(DocumentSnapshot u1, DocumentSnapshot u2) {
-                        return Timestamp.valueOf( u1.get("datetime").toString() ).compareTo(Timestamp.valueOf( u2.get("datetime").toString() ));
+                        if( Objects.isNull( u1.get("datetime", Timestamp.class) ) || Objects.isNull( u2.get("datetime", Timestamp.class) )  )
+                            return (u1.get("datetime", Timestamp.class)).compareTo( u2.get("datetime", Timestamp.class) );
+                        else return 0;
                     } });
                 if (answersQuery.isComplete()) {
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);
-                        Answer ans = new Answer( doc.get("username").toString(),  doc.get("content").toString(), Timestamp.valueOf( doc.get("datetime").toString() ),  Integer.valueOf(doc.get("votes").toString()));
-                        ans_list.add(ans.getContent() + "\n" + new SimpleDateFormat("MM/dd/yyyy HH:mm").format(ans.getDatetime()) + " - "  + ans.getUsername());
+
+                        Answer ans = doc.toObject(Answer.class);
+                        ans.setId( doc.getId() );
+                        ans_list.add( ans );
                         i++;
+
                     }
                     adapter.notifyDataSetChanged();
                 }

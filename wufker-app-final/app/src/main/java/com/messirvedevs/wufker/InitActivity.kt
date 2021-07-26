@@ -1,13 +1,13 @@
 package com.messirvedevs.wufker
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +18,9 @@ class InitActivity : AppCompatActivity() {
 
     private val GOOGLE_SIGN_IN = 100
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
+    val SHARED_PREFS = "USER_DATA_WUFKER"
+    val EMAIL = "EMAIL"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,10 @@ class InitActivity : AppCompatActivity() {
     }
 
     private fun setup() {
+
+        val sharedPreferences: SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        if( sharedPreferences.getString(EMAIL, "") != "" ) showHome(sharedPreferences.getString(EMAIL, "")  ?: "", "GOOGLE")
+
         title = "Autenticación"
         val singup: Button = findViewById(R.id.registerButton)
         val editTextTextEmailAddress: EditText = findViewById(R.id.editTextFirstName)
@@ -90,6 +97,7 @@ class InitActivity : AppCompatActivity() {
             putExtra( "provider", provider )
         }
         startActivity(homeIntent)
+        finish()
     }
 
     private fun showSingUp() {

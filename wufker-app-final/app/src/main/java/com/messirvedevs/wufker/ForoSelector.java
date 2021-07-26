@@ -82,21 +82,12 @@ public class ForoSelector extends Fragment implements View.OnClickListener{
         TextView comp =  (TextView) getView().findViewById(R.id.CategoriasComportamiento);
         TextView  ali =  (TextView) getView().findViewById(R.id.CategoriasAlimentacion);
         TextView misc =  (TextView) getView().findViewById(R.id.CategoriasMiscelaneos);
-        Button mapButton =  (Button) getView().findViewById(R.id.mapButton);
 
         enf.setOnClickListener((View.OnClickListener) this);
         cons.setOnClickListener((View.OnClickListener) this);
         comp.setOnClickListener((View.OnClickListener) this);
         ali.setOnClickListener((View.OnClickListener) this);
         misc.setOnClickListener((View.OnClickListener) this);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Navigation.findNavController(view).navigate(R.id.googleMap);
-                //startActivity(mapa);
-            }
-        });
     }
     @Override
     public void onClick(View v) {

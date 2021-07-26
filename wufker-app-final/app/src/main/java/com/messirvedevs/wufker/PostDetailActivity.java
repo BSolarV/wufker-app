@@ -140,7 +140,12 @@ public class PostDetailActivity extends AppCompatActivity {
                     int i = 0;
                     while (i < docList.size()) {
                         DocumentSnapshot doc = docList.get(i);
-                        Answer ans = new Answer( doc.get("username").toString(),  doc.get("content").toString(), Timestamp.valueOf( doc.get("datetime").toString() ),  Integer.valueOf(doc.get("votes").toString()));
+                        Answer ans = doc.toObject(Answer.class);
+                        /*Answer ans = new Answer( doc.get("username").toString(),
+                                doc.get("content").toString(),
+                                Timestamp.valueOf( doc.get("datetime").toString() ),
+                                Integer.valueOf(doc.get("votes").toString()),
+                                doc.get("voters"));*/
                         ans_list.add(ans.getContent() + "\n" + new SimpleDateFormat("MM/dd/yyyy HH:mm").format(ans.getDatetime()) + " - "  + ans.getUsername());
                         i++;
                     }

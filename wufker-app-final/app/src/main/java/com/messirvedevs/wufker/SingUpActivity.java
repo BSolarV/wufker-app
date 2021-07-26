@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class SingUpActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "USER_DATA_WUFKER";
     public static final String EMAIL = "EMAIL";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

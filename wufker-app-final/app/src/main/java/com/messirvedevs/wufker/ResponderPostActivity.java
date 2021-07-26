@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class ResponderPostActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ActivityResponderPostBinding binding;
 
     private String category, postTitle, postContent ,idPost;
