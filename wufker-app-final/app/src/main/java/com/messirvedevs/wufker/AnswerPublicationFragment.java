@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -119,6 +120,7 @@ public class AnswerPublicationFragment extends Fragment {
         answer = editAnswer.getText().toString().trim();
 
         if (answer.length() > 0) {
+
             // Agregar la respuesta a firebase
             Date date= new Date();
             long time = date.getTime();
@@ -126,14 +128,13 @@ public class AnswerPublicationFragment extends Fragment {
 
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
-            db.collection("answers").add(new HashMap<String, String>() {{
-                put("postId", idPost);
-                put("content", answer);
-                put("datetime", String.valueOf(ts));
-                put("votes", "0");
-                put("username", sharedPreferences.getString(EMAIL, ""));
-            }});
+            String id = db.collection("Answers").document().getId();
+            Answer answerObj = new Answer(sharedPreferences.getString(EMAIL, ""), answer, idPost, date, 0, new HashMap<String, Boolean>());
+            answerObj.setId(id);
+            db.collection("answers").document(id).set(answerObj);
+
             Navigation.findNavController(view).popBackStack();
+
         } else {
             Toast.makeText(getContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
         }

@@ -93,7 +93,7 @@ public class UserProfile extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
-        Task<QuerySnapshot> data = db.collection("users").whereEqualTo("email","cajara@sansano.usm.cl").get();
+        Task<QuerySnapshot> data = db.collection("users").whereEqualTo("email",sharedPreferences.getString(EMAIL, "")).get();
         data.addOnSuccessListener(result -> {
             List<DocumentSnapshot> users = result.getDocuments();
             /*if(users.size()== 0 ){
