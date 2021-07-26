@@ -29,7 +29,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "USER_DATA_WUFKER";
     public static final String EMAIL = "EMAIL";
-    public static final String LASTNAME = "LASTNAME";
+    public static final String FULLNAME = "FULLNAME";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button saveButton;
@@ -103,7 +103,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(LASTNAME, editTextLastName.getText().toString());
+                    editor.putString(FULLNAME, editTextFirstName.getText().toString() + " " + editTextLastName.getText().toString());
                     editor.apply();
 
                     String email = sharedPreferences.getString(EMAIL, "");

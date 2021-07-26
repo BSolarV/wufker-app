@@ -1,16 +1,23 @@
 package com.messirvedevs.wufker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,9 +25,15 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
+import com.messirvedevs.wufker.objects.Answer;
+import com.messirvedevs.wufker.objects.User;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class ForoActivity extends AppCompatActivity {
@@ -28,9 +41,22 @@ public class ForoActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityForoBinding binding;
 
+    private SharedPreferences sharedPreferences;
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
+    public static final String FULLNAME = "FULLNAME";
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        if (sharedPreferences.getString(EMAIL,"" ).equals("") || sharedPreferences.getString(FULLNAME,"" ).equals("") ) backToLogin();
 
         binding = ActivityForoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -45,7 +71,7 @@ public class ForoActivity extends AppCompatActivity {
             }
         });*/
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -55,6 +81,8 @@ public class ForoActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        setDrawerData();
 
         //Foro Selector
         /*TextView enf =  findViewById(R.id.CategoriasEnfemedades);
@@ -111,4 +139,30 @@ public class ForoActivity extends AppCompatActivity {
         Navigation.findNavController(v).navigate(R.id.publicationSelector, bundle);
         //startActivity(foro);
     }*/
+
+    public void setDrawerData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        View menu = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        //ImageView drawerImageView =  findViewById(R.id.drawerImageView);
+        TextView drawerUserName = menu.findViewById(R.id.drawerUserName);
+        TextView drawerEmail =  menu.findViewById(R.id.drawerEmail);
+
+        String email = sharedPreferences.getString(EMAIL, "");
+        String fullname = sharedPreferences.getString(FULLNAME, "");
+
+        drawerUserName.setText(fullname);
+        drawerEmail.setText(email);
+
+    }
+
+    public void backToLogin(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(EMAIL);
+        editor.remove(FULLNAME);
+        editor.apply();
+        Intent login = new Intent(this, InitActivity.class);
+        startActivity(login);
+        finish();
+    }
 }
