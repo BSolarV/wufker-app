@@ -73,6 +73,6 @@
     <fragment
         android:id="@+id/editPublication"
         android:name="com.messirvedevs.wufker.EditPublication"
-        android:label="fragment_edit_publication"
+        android:label="Editar"
         tools:layout="@layout/fragment_edit_publication" />
 </navigation>
