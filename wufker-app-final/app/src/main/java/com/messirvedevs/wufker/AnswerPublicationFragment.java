@@ -149,6 +149,15 @@ public class AnswerPublicationFragment extends Fragment {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             user = document.toObject(User.class);
+
+                            if( user.getVet() ) badges.add("veterinario");
+
+                            Answer answerObj = new Answer(email, answer, idPost, date, 0, new HashMap<String, Boolean>(), badges);
+                            answerObj.setId(id);
+
+                            db.collection("answers").document(id).set(answerObj);
+                            Navigation.findNavController(view).popBackStack();
+
                         } else {
                             backToLogin();
                         }
@@ -157,13 +166,6 @@ public class AnswerPublicationFragment extends Fragment {
                     }
                 }
             });
-            if( user.getVet() ) badges.add("veterinario");
-            Answer answerObj = new Answer(email, answer, idPost, date, 0, new HashMap<String, Boolean>(), badges);
-            answerObj.setId(id);
-            db.collection("answers").document(id).set(answerObj);
-
-            Navigation.findNavController(view).popBackStack();
-
         } else {
             Toast.makeText(getContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
         }

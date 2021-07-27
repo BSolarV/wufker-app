@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gray" >
+    android:background="@drawable/background_gray"
+    tools:context=".googleMap" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,6 +58,6 @@
                 android:layout_below="@id/cerca_de_ti" />
         </RelativeLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
 
 

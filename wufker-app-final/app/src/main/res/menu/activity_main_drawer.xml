@@ -10,7 +10,7 @@
             android:title="Foros" />
         <item
             android:id="@+id/googleMap"
-            android:icon="@drawable/common_google_signin_btn_icon_light_focused"
+            android:icon="@drawable/round_map_24"
             android:title= "Mapa" />
         <item
             android:id="@+id/userProfile"

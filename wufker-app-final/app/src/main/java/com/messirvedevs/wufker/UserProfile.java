@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -123,14 +124,16 @@ public class UserProfile extends Fragment {
                 TextView nombre =  (TextView) getView().findViewById(R.id.ProfileName);
                 TextView correo = (TextView) getView().findViewById(R.id.ProfileSince);
                 TextView fecha = (TextView) getView().findViewById(R.id.fechaNacimiento);
+                TextView profileVeterinario = (TextView) getView().findViewById(R.id.profileVeterinario);
 
 
                 nombre.setText(user.getFirstname() + " " + user.getLastname());
                 correo.setText(email);
                 fecha.setText(new SimpleDateFormat("dd/MM/yyyy").format(user.getBirthdate()));
-                Switch isvet = (Switch) getView().findViewById(R.id.vetSwitch);
+                Switch isVet = getView().findViewById(R.id.vetSwitch);
                 if (user.getVet()){
-                    isvet.setChecked(true);
+                    profileVeterinario.setText("Veterinario");
+                    isVet.setChecked(true);
                 }
             });
         }catch (Exception e){

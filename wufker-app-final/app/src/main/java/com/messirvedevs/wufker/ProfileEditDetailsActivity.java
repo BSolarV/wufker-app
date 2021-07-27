@@ -29,7 +29,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "USER_DATA_WUFKER";
     public static final String EMAIL = "EMAIL";
-    public static final String LASTNAME = "LASTNAME";
+    public static final String FULLNAME = "FULLNAME";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button saveButton;
@@ -103,7 +103,7 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(LASTNAME, editTextLastName.getText().toString());
+                    editor.putString(FULLNAME, editTextFirstName.getText().toString() + " " + editTextLastName.getText().toString());
                     editor.apply();
 
                     String email = sharedPreferences.getString(EMAIL, "");
@@ -113,8 +113,9 @@ public class ProfileEditDetailsActivity extends AppCompatActivity {
                     }catch (Exception e){
                         birthdate = new Date();
                     }
-                    User user = new User(email, editTextFirstName.getText().toString(), editTextLastName.getText().toString(), switchVet.isActivated(), birthdate);
-
+                    Toast.makeText(ProfileEditDetailsActivity.this, String.valueOf(switchVet.isChecked()), Toast.LENGTH_SHORT).show();
+                    User user = new User(email, editTextFirstName.getText().toString(), editTextLastName.getText().toString(), switchVet.isChecked(), birthdate);
+                    Toast.makeText(ProfileEditDetailsActivity.this, String.valueOf(user.getVet()), Toast.LENGTH_SHORT).show();
                     db.collection("users").document(sharedPreferences.getString(EMAIL, "")).set(user);
                     showHome();
 
