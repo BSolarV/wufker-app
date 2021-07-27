@@ -41,13 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ForoDetailActivity"
-            android:theme="@style/Theme.WufkerApp.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.ANSWER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ResponderPostActivity"
             android:theme="@style/Theme.WufkerApp.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
