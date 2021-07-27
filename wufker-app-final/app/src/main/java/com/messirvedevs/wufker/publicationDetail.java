@@ -191,7 +191,7 @@ public class publicationDetail extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.editar:
-                Toast.makeText(getContext(), "Editar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Editar", Toast.LENGTH_SHORT).show();
                 Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
                 data.addOnSuccessListener(command -> {
                     titulo = command.get("title").toString();
