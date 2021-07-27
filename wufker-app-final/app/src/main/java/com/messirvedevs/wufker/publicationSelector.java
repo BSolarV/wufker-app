@@ -59,6 +59,8 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
 
     private ArrayAdapter adapter;
 
+    private LoadingDialog loadingDialog = new LoadingDialog(this);
+
     public publicationSelector() {
         // Required empty public constructor
     }
@@ -149,6 +151,9 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
         lv.setOnItemClickListener(this);
 
 
+        loadingDialog.startLoadingDialog();
+
+
 
     }
 
@@ -200,6 +205,7 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
                 }
                 //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
+                loadingDialog.dismissDialog();
             }
         });
     }

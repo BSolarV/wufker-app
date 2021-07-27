@@ -89,6 +89,8 @@ public class googleMap extends Fragment
     private List<LatLng> placesLatLngs = new ArrayList();
     private ArrayAdapter adapter;
 
+    
+
     private Marker marker;
     MenuItem searchItem;
 

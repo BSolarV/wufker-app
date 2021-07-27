@@ -78,6 +78,8 @@ public class publicationDetail extends Fragment {
     public static final String SHARED_PREFS = "USER_DATA_WUFKER";
     public static final String EMAIL = "EMAIL";
 
+    private LoadingDialog loadingDialog = new LoadingDialog(this);
+
     public publicationDetail() {
         // Required empty public constructor
     }
@@ -171,6 +173,7 @@ public class publicationDetail extends Fragment {
                 registerForContextMenu(card_menu);
             }
         });
+        loadingDialog.startLoadingDialog();
 
 
     }
@@ -285,8 +288,10 @@ public class publicationDetail extends Fragment {
 
                     }
                     adapter.notifyDataSetChanged();
+                    loadingDialog.dismissDialog();
                 }
             });
+
         });
     }
 }

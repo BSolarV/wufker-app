@@ -64,6 +64,7 @@ public class UserProfile extends Fragment implements AdapterView.OnItemClickList
     private String category;
 
     private String userEmail;
+    private LoadingDialog loadingDialog = new LoadingDialog(this);
 
     public UserProfile() {
         // Required empty public constructor
@@ -106,6 +107,8 @@ public class UserProfile extends Fragment implements AdapterView.OnItemClickList
         ListView lv = (ListView) getView().findViewById(R.id.ProfilePublicationsList);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
+
+        loadingDialog.startLoadingDialog();
     }
 
     @Override
@@ -170,6 +173,7 @@ public class UserProfile extends Fragment implements AdapterView.OnItemClickList
                     }
                     //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
                     adapter.notifyDataSetChanged();
+                    loadingDialog.dismissDialog();
                 }
 
             });
