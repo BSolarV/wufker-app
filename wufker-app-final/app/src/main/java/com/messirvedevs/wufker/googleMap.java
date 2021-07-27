@@ -51,6 +51,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,6 +91,11 @@ public class googleMap extends Fragment
 
     private Marker marker;
     MenuItem searchItem;
+
+    ArrayList<String> KEYWORDS = new ArrayList<String>(
+            Arrays.asList("veterinaria", "veterinario", "consultorio", "veterinary",
+                    "clinica", "clínica", "clinic", "hospital", "doctor", "medico", "medical",
+                    "mascota", "mascotas", "pet", "tienda", "shop", "centro", "asistencial"));
 
     public googleMap() {
         // Required empty public constructor
@@ -399,28 +405,45 @@ public class googleMap extends Fragment
         protected void onPostExecute(List<HashMap<String, String>> list) {
             Log.d("Map", "list size: " + list.size());
 
+            placesNames.clear();
+            placesVicinity.clear();
+            placesLatLngs.clear();
+            adapter.notifyDataSetChanged();
+
             if (list.size() == 0) {
                 Toast.makeText(getContext(), "No se encontraron veterinarias cercanas", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            placesNames.clear();
-            placesVicinity.clear();
-            placesLatLngs.clear();
-
-            int entries = Math.min(list.size(), MAX_ENTRIES);
-            for (int i = 0; i < entries; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 HashMap<String, String> hmPlace = list.get(i); // Getting a place from the places list
-                double lat = Double.parseDouble(hmPlace.get("lat")); // Getting latitude of the place
-                double lng = Double.parseDouble(hmPlace.get("lng")); // Getting longitude of the place
-                LatLng latLng = new LatLng(lat, lng);
                 String name = hmPlace.get("place_name"); // Getting name
-                String vicinity = hmPlace.get("vicinity"); // Getting vicinity
 
-                placesNames.add(name);
-                placesVicinity.add(vicinity);
-                placesLatLngs.add(latLng);
+                for (String key : KEYWORDS) {
+                    if (name.toLowerCase().contains(key)) {
+                        Log.d(LOGTAG, name);
+                        double lat = Double.parseDouble(hmPlace.get("lat")); // Getting latitude of the place
+                        double lng = Double.parseDouble(hmPlace.get("lng")); // Getting longitude of the place
+                        LatLng latLng = new LatLng(lat, lng);
+                        String vicinity = hmPlace.get("vicinity"); // Getting vicinity
+
+                        placesNames.add(name);
+                        placesVicinity.add(vicinity);
+                        placesLatLngs.add(latLng);
+                        break;
+                    }
+                }
             }
+
+            int entries = Math.min(placesNames.size(), MAX_ENTRIES);
+            if (entries == 0) {
+                Toast.makeText(getContext(), "No se encontraron veterinarias cercanas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            placesNames = placesNames.subList(0, entries);
+            placesVicinity = placesVicinity.subList(0, entries);
+            placesLatLngs = placesLatLngs.subList(0, entries);
 
             adapter.notifyDataSetChanged(); // Actualiza la lista con los lugares respectivos.
         }
