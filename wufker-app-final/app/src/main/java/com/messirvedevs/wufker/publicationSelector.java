@@ -195,7 +195,7 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
         Task<QuerySnapshot> data = db.collection("posts").whereEqualTo("category", category).get();
         data.addOnSuccessListener(command -> {
             List<ForoPost> docList = command.toObjects(ForoPost.class);
-            Collections.sort(docList, new Comparator<ForoPost>() {
+            /*Collections.sort(docList, new Comparator<ForoPost>() {
                 @Override
                 public int compare(ForoPost u1, ForoPost u2) {
                     try{
@@ -204,7 +204,7 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
                         return 0;
                     }
                 }
-            });
+            });*/
 
             String text = "Selected: "+category+"\n"+command.size()+"\n";
             if ( data.isComplete() ){
@@ -213,7 +213,7 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
                         docList) {
                     text = text + post.getTitle() + "\n";
 
-                    String aux =post.getTitle() + "\n                                      " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(post.getTimestamp());
+                    String aux =post.getTitle();
                     post_list.add(aux);
                     id_list.add(command.getDocuments().get(i).getId());
                     i++;
