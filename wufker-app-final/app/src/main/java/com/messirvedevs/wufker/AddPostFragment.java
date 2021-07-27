@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.messirvedevs.wufker.objects.ForoPost;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -113,12 +115,12 @@ public class AddPostFragment extends Fragment {
 
             // Agregar los nuevos post a firebase
 
-            db.collection("posts").add(new HashMap<String, String>() {{
-                put("category", category);
-                put("title", postTitle);
-                put("content", postContent);
-                put("authorEmail", sharedPreferences.getString(EMAIL, ""));
-            }});
+            String postId = db.collection("posts").document().getId();
+            String authorEmail = sharedPreferences.getString(EMAIL, "");
+            ForoPost foroPost = new ForoPost(category, postTitle, authorEmail, postContent, postId, new Date());
+
+            db.collection("posts").document(postId).set(foroPost);
+
             Navigation.findNavController(view).popBackStack();
         } else {
             Toast.makeText(getContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();

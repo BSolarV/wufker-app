@@ -34,10 +34,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.adapters.AnswerListAdapter;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 import com.messirvedevs.wufker.objects.Answer;
+import com.messirvedevs.wufker.objects.ForoPost;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,12 +63,9 @@ public class publicationDetail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //windu
-    private ActivityForoBinding binding;
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Answer> answers;
-    private TextView inForoTitle,InForoUser,InForoQuestion;
+    private TextView inForoTitle,InForoUser,InForoQuestion, InForoDateTime;
     private LinearLayout card_menu;
 
     private List<Answer> ans_list = new ArrayList();
@@ -130,12 +129,9 @@ public class publicationDetail extends Fragment {
         inForoTitle = (TextView) getView().findViewById(R.id.inForoTitle);
         InForoQuestion = (TextView) getView().findViewById(R.id.InForoQuestion);
         InForoUser = (TextView) getView().findViewById(R.id.InForoUser);
-
-
-
+        InForoDateTime = (TextView) getView().findViewById(R.id.InForoDateTime);
 
         card_menu = (LinearLayout) getView().findViewById(R.id.cardFor_contextMenu);
-
 
         FloatingActionButton btn =  getView().findViewById(R.id.fab2);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -250,20 +246,29 @@ public class publicationDetail extends Fragment {
     public void onResume() {
         super.onResume();
 
-
         ans_list.clear();
 
         // Get post and answers from database
-
         Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
         data.addOnSuccessListener(command -> {
+            ForoPost foroPost = command.toObject(ForoPost.class);
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-            inForoTitle.setText(command.get("title").toString());
-            InForoQuestion.setText(command.get("content").toString());
-            InForoUser.setText(command.get("authorEmail").toString());
-            if (command.get("authorEmail").toString() == sharedPreferences.getString(EMAIL, "")) {
+            inForoTitle.setText(foroPost.getTitle());
+            InForoQuestion.setText(foroPost.getContent());
+            InForoUser.setText(foroPost.getAuthorEmail());
+            if (foroPost.getAuthorEmail() == sharedPreferences.getString(EMAIL, "")) {
                 registerForContextMenu(card_menu);
             }
+            InForoUser.setClickable(true);
+            InForoUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userEmail", foroPost.getAuthorEmail());
+                    Navigation.findNavController(v).navigate(R.id.userProfile, bundle);
+                }
+            });
+            InForoDateTime.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(foroPost.getTimestamp()));
             Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", id).get();
             answersQuery.addOnSuccessListener(content -> {
                 List<DocumentSnapshot> docList = content.getDocuments();

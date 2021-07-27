@@ -172,9 +172,6 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-        /*Intent intent = new Intent(getContext(), PostDetailActivity.class);
-        intent.putExtra("postId",  id_list.get(pos));
-        startActivity(intent);*/
 
         Bundle bundle = new Bundle();
         bundle.putString("postId",  id_list.get(pos));
