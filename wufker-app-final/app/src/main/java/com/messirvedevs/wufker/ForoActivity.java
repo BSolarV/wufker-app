@@ -141,8 +141,11 @@ public class ForoActivity extends AppCompatActivity {
     }*/
 
     public void setDrawerData(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View menu = navigationView.getHeaderView(0);
+
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        View menu = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        //View menu = navigationView.inflateHeaderView(R.layout.nav_header_main);
 
         //ImageView drawerImageView =  findViewById(R.id.drawerImageView);
         TextView drawerUserName = menu.findViewById(R.id.drawerUserName);

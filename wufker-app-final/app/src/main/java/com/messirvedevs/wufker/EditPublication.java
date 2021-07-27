@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
@@ -88,7 +89,7 @@ public class EditPublication extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        id = getArguments().getString("postId");
+        id = getArguments().getString("id_post");
         category = getArguments().getString("category");
         titulo = getArguments().getString("titulo");
         question = getArguments().getString("question");
@@ -132,19 +133,17 @@ public class EditPublication extends Fragment {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
             // Agregar los nuevos post a firebase
-            db.collection("posts").document(id)
-                    .update(
+            //Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
+            DocumentReference publication_post = db.collection("posts").document(id);
+            publication_post.update(
                             "authorEmail",user,
                     "category", category,
                             "title", postTitle,
                             "content", postContent
                     );
-            /*db.collection("posts").add(new HashMap<String, String>() {{
-                put("category", category);
-                put("title", postTitle);
-                put("content", postContent);
-                put("authorEmail", sharedPreferences.getString(EMAIL, ""));
-            }});*/
+
+
+
             Navigation.findNavController(view).popBackStack();
         } else {
             Toast.makeText(getContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();

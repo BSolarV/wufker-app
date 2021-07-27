@@ -1,7 +1,9 @@
 package com.messirvedevs.wufker;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -73,6 +75,9 @@ public class publicationDetail extends Fragment {
 
     private String id,category,titulo,question,user;
 
+    public static final String SHARED_PREFS = "USER_DATA_WUFKER";
+    public static final String EMAIL = "EMAIL";
+
     public publicationDetail() {
         // Required empty public constructor
     }
@@ -105,6 +110,9 @@ public class publicationDetail extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        id = getArguments().getString("postId");
+
+
     }
 
     @Override
@@ -122,8 +130,10 @@ public class publicationDetail extends Fragment {
         InForoUser = (TextView) getView().findViewById(R.id.InForoUser);
 
 
+
+
         card_menu = (LinearLayout) getView().findViewById(R.id.cardFor_contextMenu);
-        registerForContextMenu(card_menu);
+
 
 
 
@@ -152,12 +162,19 @@ public class publicationDetail extends Fragment {
             }
         });
 
-        id = getArguments().getString("postId");
+
 
         adapter = new AnswerListAdapter(getContext(), ans_list );
         ListView InForoAnswers = (ListView) getView().findViewById(R.id.InForoAnswers);
 
         InForoAnswers.setAdapter(adapter);
+        Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
+        data.addOnSuccessListener(command -> {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+            if (command.get("authorEmail").toString().equals(sharedPreferences.getString(EMAIL, ""))) {
+                registerForContextMenu(card_menu);
+            }
+        });
 
 
     }
@@ -234,15 +251,20 @@ public class publicationDetail extends Fragment {
     public void onResume() {
         super.onResume();
 
+
         ans_list.clear();
 
         // Get post and answers from database
 
         Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
         data.addOnSuccessListener(command -> {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
             inForoTitle.setText(command.get("title").toString());
             InForoQuestion.setText(command.get("content").toString());
             InForoUser.setText(command.get("authorEmail").toString());
+            if (command.get("authorEmail").toString() == sharedPreferences.getString(EMAIL, "")) {
+                registerForContextMenu(card_menu);
+            }
             Task<QuerySnapshot> answersQuery = db.collection("answers").whereEqualTo("postId", id).get();
             answersQuery.addOnSuccessListener(content -> {
                 List<DocumentSnapshot> docList = content.getDocuments();
