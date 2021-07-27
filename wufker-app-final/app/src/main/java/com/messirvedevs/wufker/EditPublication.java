@@ -101,7 +101,6 @@ public class EditPublication extends Fragment {
         editTitle.setText(titulo);
         editContent.setText(question);
 
-
         Button publish_btn = (Button) getView().findViewById(R.id.publicar);
         Button cancel_btn = (Button) getView().findViewById(R.id.cancelar);
 

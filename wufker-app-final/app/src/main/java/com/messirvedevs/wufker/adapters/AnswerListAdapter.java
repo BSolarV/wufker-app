@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.messirvedevs.wufker.objects.Answer;
@@ -51,6 +53,18 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
         answerEmail.setText( answer.getUsername() );
         TextView answerScore = convertView.findViewById(R.id.AnswerScore);
         answerScore.setText( String.valueOf( answer.getVotes() ) );
+
+        // Derivacion al perfil
+        answerEmail.setClickable(true);
+        answerEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("userEmail", answer.getUsername());
+                Navigation.findNavController(v).navigate(R.id.userProfile, bundle);
+            }
+        });
+
 
         // Votaciones
 

@@ -135,8 +135,6 @@ public class publicationDetail extends Fragment {
         card_menu = (LinearLayout) getView().findViewById(R.id.cardFor_contextMenu);
 
 
-
-
         FloatingActionButton btn =  getView().findViewById(R.id.fab2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,10 +156,8 @@ public class publicationDetail extends Fragment {
 
                 //startActivity(ii);
 
-
             }
         });
-
 
 
         adapter = new AnswerListAdapter(getContext(), ans_list );
