@@ -46,6 +46,9 @@
         <argument
             android:name="postId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_publicationDetail_to_editPublication"
+            app:destination="@id/editPublication" />
     </fragment>
     <fragment
         android:id="@+id/googleMap"
@@ -67,4 +70,9 @@
         android:name="com.messirvedevs.wufker.UserProfile"
         android:label="Perfil"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/editPublication"
+        android:name="com.messirvedevs.wufker.EditPublication"
+        android:label="fragment_edit_publication"
+        tools:layout="@layout/fragment_edit_publication" />
 </navigation>

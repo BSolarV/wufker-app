@@ -1,20 +1,29 @@
 package com.messirvedevs.wufker;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.adapters.AnswerListAdapter;
 import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 import com.messirvedevs.wufker.objects.Answer;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -53,12 +64,13 @@ public class publicationDetail extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Answer> answers;
     private TextView inForoTitle,InForoUser,InForoQuestion;
+    private LinearLayout card_menu;
 
     private List<Answer> ans_list = new ArrayList();
 
     private AnswerListAdapter adapter;
 
-    private String id,category;
+    private String id,category,titulo,question,user;
 
     public publicationDetail() {
         // Required empty public constructor
@@ -79,12 +91,15 @@ public class publicationDetail extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -104,6 +119,12 @@ public class publicationDetail extends Fragment {
         inForoTitle = (TextView) getView().findViewById(R.id.inForoTitle);
         InForoQuestion = (TextView) getView().findViewById(R.id.InForoQuestion);
         InForoUser = (TextView) getView().findViewById(R.id.InForoUser);
+
+
+        card_menu = (LinearLayout) getView().findViewById(R.id.cardFor_contextMenu);
+        registerForContextMenu(card_menu);
+
+
 
         FloatingActionButton btn =  getView().findViewById(R.id.fab2);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +157,75 @@ public class publicationDetail extends Fragment {
         ListView InForoAnswers = (ListView) getView().findViewById(R.id.InForoAnswers);
 
         InForoAnswers.setAdapter(adapter);
+
+
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull @NotNull ContextMenu menu, @NonNull @NotNull View v, @Nullable @org.jetbrains.annotations.Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.editar:
+                Toast.makeText(getContext(), "Editar", Toast.LENGTH_SHORT).show();
+                Task<DocumentSnapshot> data = db.collection("posts").document(id).get();
+                data.addOnSuccessListener(command -> {
+                    titulo = command.get("title").toString();
+                    question = command.get("content").toString();
+                    user = command.get("authorEmail").toString();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id_post", id);
+                    bundle.putString("category", category);
+                    bundle.putString("titulo", titulo);
+                    bundle.putString("question", question);
+                    bundle.putString("user", user);
+
+                    Navigation.findNavController(getView()).navigate(R.id.editPublication, bundle);
+                });
+
+
+
+                return true;
+            case R.id.eliminar:
+                //Toast.makeText(getContext(), "Eliminar", Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setMessage("¿Estás seguro?")
+                        .setCancelable(false)
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+
+                                //Eliminar publicación y saltar atrás
+                                db.collection("posts").document(id).delete();
+                                //Toast.makeText(getContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+                                Navigation.findNavController(getView()).popBackStack();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                });
+                AlertDialog alerta = alert.create();
+                alerta.setTitle("Eliminar Publicación");
+                alerta.show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
 
 
     }
