@@ -32,7 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.adapters.AnswerListAdapter;
-import com.messirvedevs.wufker.databinding.ActivityForoBinding;
+//import com.messirvedevs.wufker.databinding.ActivityForoBinding;
 import com.messirvedevs.wufker.objects.Answer;
 import com.messirvedevs.wufker.objects.ForoPost;
 

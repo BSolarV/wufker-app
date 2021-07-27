@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.messirvedevs.wufker.objects.ForoPost;
@@ -29,7 +30,10 @@ import com.messirvedevs.wufker.objects.ForoPost;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -190,13 +194,27 @@ public class publicationSelector extends ListFragment implements AdapterView.OnI
 
         Task<QuerySnapshot> data = db.collection("posts").whereEqualTo("category", category).get();
         data.addOnSuccessListener(command -> {
+            List<ForoPost> docList = command.toObjects(ForoPost.class);
+            Collections.sort(docList, new Comparator<ForoPost>() {
+                @Override
+                public int compare(ForoPost u1, ForoPost u2) {
+                    try{
+                        return u1.getTimestamp().compareTo(u2.getTimestamp());
+                    }catch (Exception e){
+                        return 0;
+                    }
+                }
+            });
+
             String text = "Selected: "+category+"\n"+command.size()+"\n";
             if ( data.isComplete() ){
                 int i = 0;
                 for (ForoPost post:
-                        command.toObjects(ForoPost.class)) {
+                        docList) {
                     text = text + post.getTitle() + "\n";
-                    post_list.add(post.getTitle());
+
+                    String aux =post.getTitle() + "\n                                      " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(post.getTimestamp());
+                    post_list.add(aux);
                     id_list.add(command.getDocuments().get(i).getId());
                     i++;
                 }
